@@ -159,7 +159,7 @@ bundle.yml                           # Databricks Asset Bundle config
 
 ## About Me
 
-Hi, I'm **Marcus Brooks** — a Data Engineer based in Atlanta, GA with a focus on cloud-native data platforms, SQL-first pipeline design, and Microsoft Fabric.
+Hi, I'm **Melvin Brooks** — a Data Engineer based in Atlanta, GA with a focus on cloud-native data platforms, SQL-first pipeline design, and Microsoft Fabric.
 
 I built this project to demonstrate end-to-end data engineering on Microsoft Fabric — from raw CSV ingestion through a full medallion architecture to a star schema optimized for Power BI, with a live IoT streaming layer on top.
 
