@@ -1,18 +1,23 @@
+# COMMAND ----------
+# Notebook Header
+
 # ██  PART 1 OF 4 — BRONZE INGESTION                                          ██
 # ██  Notebook: nb_bronze_ingest_sql                                           ██
 # ██  19 tables · read_files() CTAS · PySpark: 3 lines                        ██
 # ██████████████████████████████████████████████████████████████████████████████
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 1 — Schema Bootstrap  [Python — only Python in this notebook]
-# ─────────────────────────────────────────────────────────────────────────────
+
 for schema in ['bronze', 'silver', 'gold']:
     spark.sql(f"CREATE SCHEMA IF NOT EXISTS {schema}")
 print("Schemas ready: bronze | silver | gold")
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 2 — raw_orders  (50,000 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_orders
 USING DELTA
@@ -29,9 +34,10 @@ FROM read_files(
 WHERE order_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 3 — raw_order_lines  (128,899 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_order_lines
 USING DELTA
@@ -43,9 +49,10 @@ FROM read_files('Files/raw/raw_order_lines.csv',
 WHERE line_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 4 — raw_customers  (500 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_customers
 USING DELTA
@@ -57,9 +64,10 @@ FROM read_files('Files/raw/raw_customers.csv',
 WHERE customer_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 5 — raw_products  (1,000 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_products
 USING DELTA
@@ -71,9 +79,10 @@ FROM read_files('Files/raw/raw_products.csv',
 WHERE sku IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 6 — raw_inventory  (10,000 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_inventory
 USING DELTA
@@ -85,9 +94,10 @@ FROM read_files('Files/raw/raw_inventory.csv',
 WHERE inventory_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 7 — raw_inventory_transactions  (50,000 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_inventory_transactions
 USING DELTA
@@ -99,9 +109,10 @@ FROM read_files('Files/raw/raw_inventory_transactions.csv',
 WHERE txn_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 8 — raw_shipments  (30,053 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_shipments
 USING DELTA
@@ -113,9 +124,10 @@ FROM read_files('Files/raw/raw_shipments.csv',
 WHERE shipment_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 9 — raw_carriers  (10 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_carriers
 USING DELTA
@@ -127,9 +139,10 @@ FROM read_files('Files/raw/raw_carriers.csv',
 WHERE carrier_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 10 — raw_warehouses  (10 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_warehouses
 USING DELTA
@@ -141,9 +154,10 @@ FROM read_files('Files/raw/raw_warehouses.csv',
 WHERE warehouse_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 11 — raw_locations  (2,000 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_locations
 USING DELTA
@@ -155,9 +169,10 @@ FROM read_files('Files/raw/raw_locations.csv',
 WHERE location_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 12 — raw_purchase_orders  (8,000 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_purchase_orders
 USING DELTA
@@ -169,9 +184,10 @@ FROM read_files('Files/raw/raw_purchase_orders.csv',
 WHERE po_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 13 — raw_suppliers  (80 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_suppliers
 USING DELTA
@@ -183,9 +199,10 @@ FROM read_files('Files/raw/raw_suppliers.csv',
 WHERE supplier_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 14 — raw_supplier_performance  (2,400 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_supplier_performance
 USING DELTA
@@ -197,9 +214,10 @@ FROM read_files('Files/raw/raw_supplier_performance.csv',
 WHERE perf_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 15 — raw_returns  (5,000 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_returns
 USING DELTA
@@ -211,9 +229,10 @@ FROM read_files('Files/raw/raw_returns.csv',
 WHERE return_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 16 — raw_employees  (200 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_employees
 USING DELTA
@@ -225,9 +244,10 @@ FROM read_files('Files/raw/raw_employees.csv',
 WHERE employee_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 17 — raw_labor_shifts  (25,000 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_labor_shifts
 USING DELTA
@@ -239,9 +259,10 @@ FROM read_files('Files/raw/raw_labor_shifts.csv',
 WHERE shift_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 18 — raw_dock_activity  (15,000 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_dock_activity
 USING DELTA
@@ -272,9 +293,10 @@ FROM read_files('Files/raw/raw_iot_events.csv',
 WHERE event_id IS NOT NULL
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 20 — raw_date_dim  (1,096 rows)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE bronze.raw_date_dim
 USING DELTA

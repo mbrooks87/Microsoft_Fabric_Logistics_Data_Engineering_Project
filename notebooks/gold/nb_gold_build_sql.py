@@ -1,3 +1,6 @@
+# COMMAND ----------
+# Notebook Header
+
 # ██  PART 3 OF 4 — GOLD BATCH                                                ██
 # ██  Notebook: nb_gold_build_sql                                              ██
 # ██  12 tables · star schema · OPTIMIZE/ZORDER/VACUUM · PySpark: 0 lines     ██
@@ -5,9 +8,10 @@
 
 # ─── DIMENSIONS ──────────────────────────────────────────────────────────────
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 1 — gold_dim_date  (build first — all facts join to this)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_dim_date
 USING DELTA
@@ -20,9 +24,10 @@ SELECT date_key, full_date, day_of_week, day_name, week_num,
 FROM silver.silver_date_dim
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 2 — gold_dim_customer
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_dim_customer
 USING DELTA
@@ -36,9 +41,10 @@ SELECT customer_id, first_name, last_name,
 FROM silver.silver_customers
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 3 — gold_dim_product
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_dim_product
 USING DELTA
@@ -54,9 +60,10 @@ SELECT sku, product_name, category, subcategory, supplier_id,
 FROM silver.silver_products
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 4 — gold_dim_warehouse  (reads directly from Bronze — small table)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_dim_warehouse
 USING DELTA
@@ -129,9 +136,10 @@ LEFT JOIN line_agg l ON o.order_id = l.order_id
 LEFT JOIN ship_agg s ON o.order_id = s.order_id
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 6 — gold_fact_inventory
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_fact_inventory
 USING DELTA
@@ -151,9 +159,10 @@ SELECT
 FROM silver.silver_inventory
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 7 — gold_fact_shipments
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_fact_shipments
 USING DELTA
@@ -171,9 +180,10 @@ SELECT
 FROM silver.silver_shipments
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 8 — gold_fact_labor
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_fact_labor
 USING DELTA
@@ -192,9 +202,10 @@ SELECT
 FROM silver.silver_labor_shifts
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 9 — gold_fact_dock
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_fact_dock
 USING DELTA
@@ -211,9 +222,10 @@ FROM silver.silver_dock_activity
 
 # ─── KPI MARTS ───────────────────────────────────────────────────────────────
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 10 — gold_kpi_supplier
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_kpi_supplier
 USING DELTA
@@ -230,9 +242,10 @@ FROM silver.silver_supplier_performance sp
 LEFT JOIN bronze.raw_suppliers s ON sp.supplier_id = s.supplier_id
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 11 — gold_kpi_returns
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_kpi_returns
 USING DELTA
@@ -253,9 +266,10 @@ FROM silver.silver_returns r
 LEFT JOIN silver.silver_products p ON r.sku = p.sku
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 12 — gold_kpi_iot_summary  (daily batch — 100k events → device/day grain)
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE gold.gold_kpi_iot_summary
 USING DELTA
@@ -292,25 +306,28 @@ GROUP BY device_id, device_type, warehouse_id, zone, event_date
 
 # ─── OPTIMIZE + ZORDER + VACUUM (pure SQL) ───────────────────────────────────
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 13 — OPTIMIZE + ZORDER: Fact tables
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("OPTIMIZE gold.gold_fact_orders    ZORDER BY (order_date,    customer_id)")
 spark.sql("OPTIMIZE gold.gold_fact_inventory ZORDER BY (sku,           warehouse_id)")
 spark.sql("OPTIMIZE gold.gold_fact_shipments ZORDER BY (ship_date,     carrier_id)")
 spark.sql("OPTIMIZE gold.gold_fact_labor     ZORDER BY (shift_date,    warehouse_id)")
 spark.sql("OPTIMIZE gold.gold_fact_dock      ZORDER BY (activity_date, warehouse_id)")
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 14 — OPTIMIZE + ZORDER: KPI Marts
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("OPTIMIZE gold.gold_kpi_supplier    ZORDER BY (period_year,  period_month)")
 spark.sql("OPTIMIZE gold.gold_kpi_returns     ZORDER BY (return_date,  reason_code)")
 spark.sql("OPTIMIZE gold.gold_kpi_iot_summary ZORDER BY (event_date,   warehouse_id)")
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 15 — VACUUM all Gold tables (retain 7 days / 168 hours)
-# ─────────────────────────────────────────────────────────────────────────────
+
 for tbl in [
     "gold.gold_fact_orders", "gold.gold_fact_inventory",
     "gold.gold_fact_shipments", "gold.gold_fact_labor",
@@ -321,9 +338,10 @@ for tbl in [
 ]:
     spark.sql(f"VACUUM {tbl} RETAIN 168 HOURS")
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 16 — Gold Validation: row counts across all 12 tables
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 SELECT tbl, rows, CASE WHEN rows > 0 THEN 'OK' ELSE 'EMPTY' END AS status
 FROM (
@@ -342,9 +360,10 @@ FROM (
 ) t ORDER BY tbl
 """).show(15, truncate=False)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 17 — Revenue + OTD sanity check
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 SELECT
     ROUND(SUM(order_value), 2)                        AS total_revenue,

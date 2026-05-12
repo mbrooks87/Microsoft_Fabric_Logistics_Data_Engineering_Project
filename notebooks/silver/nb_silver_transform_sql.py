@@ -1,11 +1,15 @@
+# COMMAND ----------
+# Notebook Header
+
 # ██  PART 2 OF 4 — SILVER TRANSFORM                                          ██
 # ██  Notebook: nb_silver_transform_sql                                        ██
 # ██  15 tables · CTE dedup · ROW_NUMBER() · PySpark: 0 lines                 ██
 # ██████████████████████████████████████████████████████████████████████████████
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 1 — silver_orders
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_orders
 USING DELTA
@@ -33,9 +37,10 @@ SELECT
 FROM deduped WHERE rn = 1
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 2 — silver_order_lines
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_order_lines
 USING DELTA
@@ -70,9 +75,10 @@ with_product AS (
 SELECT *, current_timestamp() AS _loaded_at FROM with_product
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 3 — silver_customers
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_customers
 USING DELTA
@@ -96,9 +102,10 @@ SELECT
 FROM deduped WHERE rn = 1
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 4 — silver_products
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_products
 USING DELTA
@@ -133,9 +140,10 @@ SELECT
 FROM deduped WHERE rn = 1
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 5 — silver_inventory
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_inventory
 USING DELTA
@@ -173,9 +181,10 @@ enriched AS (
 SELECT *, current_timestamp() AS _loaded_at FROM enriched
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 6 — silver_inventory_transactions
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_inventory_transactions
 USING DELTA
@@ -204,9 +213,10 @@ SELECT
 FROM deduped WHERE rn = 1
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 7 — silver_shipments
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_shipments
 USING DELTA
@@ -245,9 +255,10 @@ with_carrier AS (
 SELECT *, current_timestamp() AS _loaded_at FROM with_carrier
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 8 — silver_purchase_orders
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_purchase_orders
 USING DELTA
@@ -287,9 +298,10 @@ with_supplier AS (
 SELECT *, current_timestamp() AS _loaded_at FROM with_supplier
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 9 — silver_returns
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_returns
 USING DELTA
@@ -322,9 +334,10 @@ SELECT
 FROM deduped WHERE rn = 1
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 10 — silver_supplier_performance
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_supplier_performance
 USING DELTA
@@ -368,9 +381,10 @@ with_supplier AS (
 SELECT *, current_timestamp() AS _loaded_at FROM with_supplier
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 11 — silver_employees
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_employees
 USING DELTA
@@ -399,9 +413,10 @@ with_warehouse AS (
 SELECT *, current_timestamp() AS _loaded_at FROM with_warehouse
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 12 — silver_labor_shifts
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_labor_shifts
 USING DELTA
@@ -437,9 +452,10 @@ with_employee AS (
 SELECT *, current_timestamp() AS _loaded_at FROM with_employee
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 13 — silver_dock_activity
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_dock_activity
 USING DELTA
@@ -468,9 +484,10 @@ SELECT
 FROM deduped WHERE rn = 1
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 14 — silver_locations
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_locations
 USING DELTA
@@ -492,9 +509,10 @@ SELECT
 FROM deduped WHERE rn = 1
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 15 — silver_date_dim
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE OR REPLACE TABLE silver.silver_date_dim
 USING DELTA
@@ -525,9 +543,10 @@ SELECT
 FROM deduped WHERE rn = 1
 """)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 16 — Silver Validation: null + dupe check across all 15 tables
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 WITH audit AS (
     SELECT 'silver_orders' AS tbl,'order_id' AS pk,COUNT(*) AS rows,

@@ -1,3 +1,6 @@
+# COMMAND ----------
+# Notebook Header
+
 # WMS SQL-First Medallion — Data Quality Validation
 # Notebook: nb_dq_validation
 # Runs as the final task in the CI/CD pipeline
@@ -8,20 +11,20 @@
 #   gold_schema   : schema name (default: gold)
 #   fail_on_error : whether to raise exception on failure (default: true)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 1 — Parameters
-# ─────────────────────────────────────────────────────────────────────────────
+
 gold_schema   = getArgument("gold_schema",   "gold")
 fail_on_error = getArgument("fail_on_error", "true").lower() == "true"
 
 print(f"Running DQ validation on schema: {gold_schema}")
 print(f"Fail on error: {fail_on_error}")
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 2 — Row Count Checks
-# Every Gold table must have rows — empty table = pipeline failure
-# MAGIC %%sql
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql(f"""
 CREATE OR REPLACE TEMPORARY VIEW dq_row_counts AS
 SELECT tbl, rows, CASE WHEN rows > 0 THEN 'PASS' ELSE 'FAIL' END AS status
@@ -44,11 +47,10 @@ FROM (
 row_count_results = spark.sql("SELECT * FROM dq_row_counts ORDER BY tbl")
 row_count_results.show(15, truncate=False)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 3 — Business Rule Checks
-# Critical business logic validation across Gold facts
-# MAGIC %%sql
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql(f"""
 CREATE OR REPLACE TEMPORARY VIEW dq_business_rules AS
 
@@ -158,11 +160,10 @@ business_rule_results = spark.sql(
 )
 business_rule_results.show(15, truncate=False)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 4 — Freshness Check
-# Gold tables should have been loaded within the last 25 hours
-# Guards against silent pipeline failures
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql(f"""
 CREATE OR REPLACE TEMPORARY VIEW dq_freshness AS
 SELECT
@@ -194,11 +195,10 @@ freshness_results = spark.sql(
 )
 freshness_results.show(truncate=False)
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 5 — Summary Report + Pass/Fail Gate
-# Aggregates all checks and fails the job if any critical checks failed
-# GitHub Actions reads the exit code to determine pipeline success/failure
-# ─────────────────────────────────────────────────────────────────────────────
+
 summary = spark.sql("""
 SELECT
     'Row Count Checks'    AS check_type,

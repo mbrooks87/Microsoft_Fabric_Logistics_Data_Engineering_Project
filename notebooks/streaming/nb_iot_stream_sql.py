@@ -1,11 +1,15 @@
+# COMMAND ----------
+# Notebook Header
+
 # ██  PART 4 OF 4 — IOT STREAMING + PIPELINE WIRING                          ██
 # ██  Notebook: nb_iot_stream_sql  (run as always-on separate job)            ██
 # ██  PySpark: ~15 lines (readStream/writeStream wrappers only)               ██
 # ██████████████████████████████████████████████████████████████████████████████
 
-# ─────────────────────────────────────────────────────────────────────────────
+
+# COMMAND ----------
 # CELL 1 — Create streaming target table  [SQL — run once before stream start]
-# ─────────────────────────────────────────────────────────────────────────────
+
 spark.sql("""
 CREATE TABLE IF NOT EXISTS gold.gold_kpi_iot_stream (
     window_start       TIMESTAMP,
@@ -107,102 +111,74 @@ print(f"Stream started  →  gold.gold_kpi_iot_stream")
 print(f"Checkpoint      →  {CHECKPOINT_PATH}")
 print(f"Query ID        →  {query.id}")
 
-# ─────────────────────────────────────────────────────────────────────────────
-# CELL 5 — Monitor stream  [Python]
-# ⚠️  Run this cell MANUALLY after Cell 4 has started — do NOT run as part
-#     of a sequential notebook run. Requires query variable from Cell 4.
-# ─────────────────────────────────────────────────────────────────────────────
-try:
-    if query.isActive:
-        p = query.lastProgress
-        if p:
-            print(f"Status         : {query.status['message']}")
-            print(f"Input rows/sec : {p.get('inputRowsPerSecond', 0):.2f}")
-            print(f"Processed rows : {p.get('numInputRows', 0)}")
-            print(f"Batch duration : {p.get('durationMs', {}).get('triggerExecution', 0)} ms")
-        else:
-            print("Stream active — no batch completed yet. Wait for first 5-minute trigger.")
-    else:
-        print(f"Stream is not active. Last exception: {query.exception()}")
-except NameError:
-    print("⚠️  query not defined — run Cell 4 first to start the stream.")
 
-# ─────────────────────────────────────────────────────────────────────────────
+# COMMAND ----------
+# CELL 5 — Monitor stream  [Python — run anytime while stream is active]
+
+if query.isActive:
+    p = query.lastProgress
+    if p:
+        print(f"Status         : {query.status['message']}")
+        print(f"Input rows/sec : {p.get('inputRowsPerSecond', 0):.2f}")
+        print(f"Processed rows : {p.get('numInputRows', 0)}")
+        print(f"Batch duration : {p.get('durationMs', {}).get('triggerExecution', 0)} ms")
+
+
+# COMMAND ----------
 # CELL 6 — Graceful stop  [Python]
-# ⚠️  Run MANUALLY only when you want to stop the stream.
-#     Comment out when running notebook top-to-bottom.
-# ─────────────────────────────────────────────────────────────────────────────
-# try:
-#     query.stop()
-#     print("Stream stopped gracefully.")
-# except NameError:
-#     print("⚠️  query not defined — stream may not be running.")
 
-# ─────────────────────────────────────────────────────────────────────────────
+# query.stop()  # Uncomment to stop the stream
+
+
+# COMMAND ----------
 # CELL 7 — Spot-check live results  [SQL]
-# ⚠️  Run MANUALLY after Cell 4 has written at least one 1-hour window batch.
-#     Table will be empty until the first trigger completes (~5 minutes).
-# ─────────────────────────────────────────────────────────────────────────────
-try:
-    spark.sql("""
-    SELECT window_start, window_end, device_id, device_type,
-           warehouse_id, zone, total_events,
-           avg_speed_mph, avg_battery_pct, alert_count, alert_rate, event_hour
-    FROM gold.gold_kpi_iot_stream
-    ORDER BY window_start DESC
-    LIMIT 20
-    """).show(truncate=False)
-except Exception as e:
-    print(f"⚠️  gold_kpi_iot_stream not ready yet — start the stream (Cell 4) first.\n{e}")
 
-# ─────────────────────────────────────────────────────────────────────────────
+spark.sql("""
+SELECT window_start, window_end, device_id, device_type,
+       warehouse_id, zone, total_events,
+       avg_speed_mph, avg_battery_pct, alert_count, alert_rate, event_hour
+FROM gold.gold_kpi_iot_stream
+ORDER BY window_start DESC
+LIMIT 20
+""").show(truncate=False)
+
+
+# COMMAND ----------
 # CELL 8 — Alert summary by warehouse, last 24 hours  [SQL]
-# ⚠️  Run MANUALLY after Cell 4 has been running for at least one trigger cycle.
-# ─────────────────────────────────────────────────────────────────────────────
-try:
-    spark.sql("""
-    SELECT warehouse_id, zone, window_start, event_hour,
-           SUM(alert_count)                                       AS total_alerts,
-           SUM(total_events)                                      AS total_events,
-           ROUND(SUM(alert_count)/SUM(total_events)*100, 2)       AS alert_rate_pct,
-           ROUND(AVG(avg_battery_pct), 2)                         AS avg_battery,
-           ROUND(MIN(min_battery_pct), 2)                         AS lowest_battery
-    FROM gold.gold_kpi_iot_stream
-    WHERE window_start >= CURRENT_TIMESTAMP() - INTERVAL 24 HOURS
-    GROUP BY warehouse_id, zone, window_start, event_hour
-    ORDER BY window_start DESC, alert_rate_pct DESC
-    """).show(truncate=False)
-except Exception as e:
-    print(f"⚠️  gold_kpi_iot_stream not ready yet — start the stream (Cell 4) first.\n{e}")
 
-# ─────────────────────────────────────────────────────────────────────────────
-# CELL 9 — Batch vs stream row count comparison  [SQL]
-# ⚠️  Run MANUALLY after both Gold batch (Part 3) and stream (Cell 4) have run.
-# ─────────────────────────────────────────────────────────────────────────────
-try:
-    spark.sql("""
-    SELECT 'Batch (daily grain)'   AS source, COUNT(*) AS rows,
-           MIN(event_date)         AS earliest, MAX(event_date) AS latest
-    FROM gold.gold_kpi_iot_summary
-    UNION ALL
-    SELECT 'Stream (hourly grain)' AS source, COUNT(*) AS rows,
-           MIN(DATE(window_start)) AS earliest, MAX(DATE(window_start)) AS latest
-    FROM gold.gold_kpi_iot_stream
-    """).show(truncate=False)
-except Exception as e:
-    print(f"⚠️  One or both IoT tables not ready yet — run Parts 3 and 4 first.\n{e}")
+spark.sql("""
+SELECT warehouse_id, zone, window_start, event_hour,
+       SUM(alert_count)                                       AS total_alerts,
+       SUM(total_events)                                      AS total_events,
+       ROUND(SUM(alert_count)/SUM(total_events)*100, 2)       AS alert_rate_pct,
+       ROUND(AVG(avg_battery_pct), 2)                         AS avg_battery,
+       ROUND(MIN(min_battery_pct), 2)                         AS lowest_battery
+FROM gold.gold_kpi_iot_stream
+WHERE window_start >= CURRENT_TIMESTAMP() - INTERVAL 24 HOURS
+GROUP BY warehouse_id, zone, window_start, event_hour
+ORDER BY window_start DESC, alert_rate_pct DESC
+""").show(truncate=False)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# CELL 10 — Optimize stream table  [SQL]
-# ⚠️  Run MANUALLY — stop the stream (Cell 6) before running this cell.
-#     Do NOT run while the stream is active.
-# ─────────────────────────────────────────────────────────────────────────────
-# try:
-#     spark.sql("OPTIMIZE gold.gold_kpi_iot_stream ZORDER BY (window_start, warehouse_id)")
-#     spark.sql("VACUUM   gold.gold_kpi_iot_stream RETAIN 168 HOURS")
-#     print("✅ OPTIMIZE and VACUUM complete.")
-# except Exception as e:
-#     print(f"⚠️  Error — ensure stream is stopped before optimizing.\n{e}")
+
+# COMMAND ----------
+# CELL 9 — Batch vs stream comparison  [SQL]
+
+spark.sql("""
+SELECT 'Batch (daily grain)'   AS source, COUNT(*) AS rows,
+       MIN(event_date)         AS earliest, MAX(event_date) AS latest
+FROM gold.gold_kpi_iot_summary
+UNION ALL
+SELECT 'Stream (hourly grain)' AS source, COUNT(*) AS rows,
+       MIN(DATE(window_start)) AS earliest, MAX(DATE(window_start)) AS latest
+FROM gold.gold_kpi_iot_stream
+""").show(truncate=False)
+
+
+# COMMAND ----------
+# CELL 10 — Optimize stream table  [SQL — stop stream first, then run]
+
+spark.sql("OPTIMIZE gold.gold_kpi_iot_stream ZORDER BY (window_start, warehouse_id)")
+spark.sql("VACUUM  gold.gold_kpi_iot_stream  RETAIN 168 HOURS")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
