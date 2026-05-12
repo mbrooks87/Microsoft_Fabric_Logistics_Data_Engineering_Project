@@ -135,13 +135,51 @@ bundle.yml                           # Databricks Asset Bundle config
 
 ---
 
-## Deployment Notes
+## Deployment Notes — Microsoft Fabric
 
-- Upload all 19 CSVs to `Files/raw/` in your Fabric Lakehouse before running Bronze.
-- `delta.enableChangeDataFeed = true` on `raw_iot_events` is required for the streaming notebook. Do not disable it once the stream is running.
-- `CREATE OR REPLACE TABLE` is a full overwrite. For incremental production loads replace with `INSERT INTO ... WHERE <date_col> > (SELECT MAX(...))`.
-- Run the validation query at the end of each notebook before proceeding to the next layer.
-- The streaming notebook runs as a **separate always-on job** — it is not part of the daily batch pipeline.
+### Step 1 — Upload CSV files to your Lakehouse
+Before running any notebook, upload all 19 CSVs from the `data/` folder into your Fabric Lakehouse:
+
+1. Open your Fabric Workspace → open your **Lakehouse**
+2. In the left panel, click **Files** → right-click → **New subfolder** → name it `raw`
+3. Click into the `raw` folder → **Upload files**
+4. Select all 19 CSV files from the `data/` folder in this repo
+5. Confirm they appear under `Files/raw/` before running Bronze
+
+### Step 2 — Import notebooks into Fabric
+1. In your Fabric Workspace → **New** → **Import notebook**
+2. Import in this order:
+   - `notebooks/bronze/nb_bronze_ingest_sql.py`
+   - `notebooks/silver/nb_silver_transform_sql.py`
+   - `notebooks/gold/nb_gold_build_sql.py`
+   - `notebooks/streaming/nb_iot_stream_sql.py`
+   - `notebooks/tests/nb_dq_validation.py`
+3. Attach each notebook to your Lakehouse
+
+### Step 3 — Run in order
+```
+nb_bronze_ingest_sql    → wait for all 19 ✓ OK in validation cell
+nb_silver_transform_sql → wait for all 15 ✓ OK in validation cell
+nb_gold_build_sql       → wait for all 12 ✓ OK in validation cell
+nb_dq_validation        → confirm all checks PASS
+nb_iot_stream_sql       → run Cells 1–4 only to start the stream
+                          (Cells 5–10 are manual spot-check cells — run separately)
+```
+
+### Step 4 — Wire the Data Factory pipeline
+1. Fabric Workspace → **New** → **Data pipeline** → name it `pl_wms_medallion`
+2. Add four **Notebook activities** in sequence (on-success arrows):
+   - Bronze Ingest → Silver Transform → Gold Build → DQ Validation
+3. Add a **Schedule trigger** → Daily at 06:00 UTC
+4. Run `nb_iot_stream_sql` as a **separate always-on Notebook job** (not part of the daily batch)
+
+### Important notes
+- `delta.enableChangeDataFeed = true` on `raw_iot_events` is set automatically in Bronze Cell 19 — do not disable it once the stream is running.
+- `CREATE OR REPLACE TABLE` is a full overwrite on each pipeline run. For incremental production loads replace with `INSERT INTO ... WHERE <date_col> > (SELECT MAX(...))`.
+- Streaming notebook Cells 5–10 are **manual** spot-check cells — do not run them sequentially with the rest of the notebook.
+
+### Note on CI/CD (`bundle.yml` / `deploy.yml`)
+The CI/CD files in this repo are written for **Databricks Asset Bundles** and serve as a reference architecture for automated deployment. For native Microsoft Fabric CI/CD, use [Fabric Git integration](https://learn.microsoft.com/en-us/fabric/cicd/git-integration/intro-to-git-integration) to connect this repo directly to your Fabric workspace.
 
 ---
 
