@@ -1,0 +1,81 @@
+supplier_id,company_name,contact_name,email,phone,address,city,country,payment_terms,lead_time_days,reliability_score,is_preferred,since_date,_ingested_at
+SUP-0001,Mitchell-Morris,Laura Ramirez,kellymartinez@stevenson.com,+1-933-706-5335x359,628 Jessica Crest,Hendrickshaven,US,NET45,50,88.4,False,2022-06-30,2026-04-30T04:36:50.726872
+SUP-0002,"Burns, Soto and Chen",Shannon Thomas,djoyce@wright-chapman.info,939.783.6660x979,04450 Padilla Rapid Suite 290,North Sarahbury,CA,NET30,26,62.9,False,2024-05-15,2026-04-30T04:36:50.726872
+SUP-0003,Norris and Sons,Charles Black,keith30@howell-lambert.com,(371)917-7539x87245,840 Murphy Island,Lake Andrea,KR,COD,49,71.9,False,2018-05-06,2026-04-30T04:36:50.726872
+SUP-0004,Gonzalez-Myers,Karen Kim,monicadougherty@hammond.com,(313)706-9672x128,387 Maria Falls Suite 853,Carrollside,IN,NET45,82,62.5,False,2024-11-19,2026-04-30T04:36:50.726872
+SUP-0005,Rodriguez Ltd,Emily Walker,mendozaaaron@barker-knight.net,(883)906-8483x681,86656 Sarah Mountains,Watsonstad,CA,NET60,16,94.3,False,2023-02-15,2026-04-30T04:36:50.726872
+SUP-0006,Cole-Sanchez,Rachel Roberts,floresjulie@caldwell.com,(704)702-5898x810,35784 Mueller Roads Apt. 080,West Shelly,CN,NET60,72,86.7,True,2018-06-20,2026-04-30T04:36:50.726872
+SUP-0007,Miller-Brown,Travis Farmer,darylgray@lambert.com,655-966-1340,00458 Johnson Row Apt. 270,Sawyershire,DE,NET45,11,92.7,False,2023-08-17,2026-04-30T04:36:50.726872
+SUP-0008,"Johnson, Curtis and Collins",Loretta Rivera,jocelyn80@perez.com,(547)522-4558x1708,42449 Morales Gateway Apt. 004,Jasonside,US,NET30,79,81.7,True,2018-06-25,2026-04-30T04:36:50.726872
+SUP-0009,Miles-Salas,Sharon Stephens,ksimpson@garcia-smith.org,(317)809-9873x1709,813 Jerry Road Suite 691,New Cody,US,COD,1,96.3,True,2018-10-16,2026-04-30T04:36:50.726872
+SUP-0010,James LLC,Jason Cowan,scott12@robinson-rodriguez.info,(698)776-2295x7947,098 Wilson Fort,North Katherine,US,COD,63,94.0,True,2024-11-28,2026-04-30T04:36:50.726872
+SUP-0011,Davis-Coleman,Carrie Pace,bakerrebekah@west-mosley.com,7444152644,945 Miller Spring Apt. 378,West Brookefort,US,NET30,62,78.2,True,2021-12-21,2026-04-30T04:36:50.726872
+SUP-0012,Smith and Sons,Rhonda Wallace,vgalvan@edwards.info,+1-560-774-1464x40261,2555 Miller Flat,Port Shirley,US,COD,37,62.3,True,2024-06-13,2026-04-30T04:36:50.726872
+SUP-0013,Guerra and Sons,Teresa Roy,melvin09@bell.com,001-227-950-5688x08482,1263 Kurt Square,Lake Christine,JP,NET45,57,83.3,False,2022-06-26,2026-04-30T04:36:50.726872
+SUP-0014,"Mayer, Quinn and Wright",Christopher Wright,nataliemartinez@moon-jordan.com,(495)688-1946x87749,931 Robert Key Suite 266,Jennatown,US,NET45,53,63.2,True,2024-03-02,2026-04-30T04:36:50.726872
+SUP-0015,Hall-Banks,Maria Clark,anthonyjones@winters.com,577-590-5340,15180 Raymond Harbors,East Johnberg,US,NET30,5,96.1,False,2022-11-25,2026-04-30T04:36:50.726872
+SUP-0016,Melton PLC,Joseph Steele,stephanie11@hill-mcclure.com,001-778-315-7341,660 Mathis Freeway,Gomezport,US,NET30,87,78.3,False,2021-09-14,2026-04-30T04:36:50.726872
+SUP-0017,Sampson Group,Marissa Pacheco,michelle78@jacobs.com,482-361-3506,401 Delacruz Vista,Leblanctown,MX,NET45,4,88.3,True,2021-09-07,2026-04-30T04:36:50.726872
+SUP-0018,Fletcher PLC,Justin Carr,ivan68@barnes-brooks.net,268.916.8214,3087 Sandra Throughway,New Andrew,US,NET60,45,85.9,False,2023-08-05,2026-04-30T04:36:50.726872
+SUP-0019,Morrison and Sons,Anthony Bruce,ythompson@olson.com,+1-347-548-5798x8892,3815 Elijah Tunnel,East Derek,US,NET60,88,84.1,True,2022-03-09,2026-04-30T04:36:50.726872
+SUP-0020,"Shelton, Maynard and Murphy",Edward Lambert,andreasampson@burns-ware.com,918.286.4594,9246 Ricardo Rapid,South Megan,US,NET60,80,95.1,False,2021-05-20,2026-04-30T04:36:50.726872
+SUP-0021,"Banks, Wong and Ramirez",Kimberly Fernandez,benjamin77@williamson.com,272-611-3598,31569 Baker Crescent,North Larrytown,IN,COD,35,85.3,False,2019-02-05,2026-04-30T04:36:50.726872
+SUP-0022,"Byrd, Zhang and Sellers",Adam Boyle,valeriepacheco@brown-bradley.com,(442)566-3316x1408,17171 Stewart Streets,Brandonville,KR,NET45,82,69.0,False,2023-06-18,2026-04-30T04:36:50.726872
+SUP-0023,"Walsh, Cox and Spencer",Michelle Smith,robert73@howard.com,+1-451-476-3524x130,1066 Newton Brooks Apt. 492,West Nicole,DE,COD,40,69.9,False,2022-01-26,2026-04-30T04:36:50.726872
+SUP-0024,Roberts-Beck,Holly Miller,james27@hanson.com,(361)858-7898,71511 Jonathan Stream,Darrenport,DE,NET60,50,85.9,False,2024-04-18,2026-04-30T04:36:50.726872
+SUP-0025,"Collins, Diaz and Torres",Daniel Herman,scottleblanc@huang-dyer.com,290-766-9545,034 Patricia Run Apt. 761,Johnsonville,TW,NET45,86,85.3,True,2020-01-30,2026-04-30T04:36:50.726872
+SUP-0026,"Mcdowell, Wilson and Powers",Joseph Vincent,gibsonanthony@hanna.org,(256)940-0191x5426,1164 Joseph Spurs,West Susan,US,COD,37,64.4,False,2024-05-05,2026-04-30T04:36:50.726872
+SUP-0027,Huff LLC,Kara Rich,jbender@browning-rice.com,606.842.1168,89515 John Spurs,Myersberg,US,COD,38,61.5,False,2018-11-16,2026-04-30T04:36:50.726872
+SUP-0028,Mitchell-Scott,Timothy Garcia,rgoodwin@sparks.com,+1-941-213-7134x6310,695 Adkins Center Apt. 883,West Danielmouth,KR,NET45,12,95.1,False,2023-09-20,2026-04-30T04:36:50.726872
+SUP-0029,Fowler-Freeman,Cynthia Adams,nathanpena@gates.org,601.268.5253x1750,0118 Howell Point,Adamstown,US,COD,79,89.9,False,2024-08-08,2026-04-30T04:36:50.726872
+SUP-0030,"Howard, Cunningham and Murphy",Teresa Johnson,timothy92@jones.biz,(780)663-9924x1611,627 William Place,South Wayneborough,JP,COD,74,90.1,False,2019-01-31,2026-04-30T04:36:50.726872
+SUP-0031,Hernandez Ltd,Julia Aguilar,nataliehernandez@clark.com,967-372-5038x56162,34277 Douglas Island Suite 374,Port Craig,MX,COD,69,64.5,False,2020-12-16,2026-04-30T04:36:50.726872
+SUP-0032,"Hernandez, Lynch and Lopez",David Olson,woodwilliam@williamson.com,(750)759-2530,9936 Powers Falls Suite 379,Shawnbury,JP,NET30,68,72.5,False,2022-10-03,2026-04-30T04:36:50.726872
+SUP-0033,"Sims, Henderson and Becker",Bethany Hernandez,malikgarcia@jones.com,453.550.2469x4841,223 Rebecca Point,Floydhaven,US,COD,39,83.3,True,2024-09-23,2026-04-30T04:36:50.726872
+SUP-0034,Tanner-Dalton,Todd Sherman,jamie13@smith-rose.com,+1-378-837-9213,60809 Sean Landing,New Jessemouth,DE,NET45,79,88.2,False,2022-12-13,2026-04-30T04:36:50.726872
+SUP-0035,Nelson-George,Patricia Sanchez,gonzalezdana@kim.com,433-670-4946,4077 Alexis Fort Suite 588,Port James,US,NET45,35,82.9,True,2020-07-27,2026-04-30T04:36:50.726872
+SUP-0036,"Cummings, Estrada and Maxwell",Justin White,zacharymorris@daniel.com,879.682.5875x3715,3307 Patrick Mall,Brownfurt,US,NET60,44,79.6,True,2020-02-21,2026-04-30T04:36:50.726872
+SUP-0037,Davis PLC,Andrea Jordan,duarteveronica@cook.com,531.934.0377x9170,61892 Paula Heights,Zacharyton,TW,NET30,87,73.9,True,2022-05-20,2026-04-30T04:36:50.726872
+SUP-0038,Drake Group,Devin Beltran,david68@huynh-sanchez.com,406-252-9905x36791,09578 Melanie Island Suite 081,Ryanview,DE,NET30,73,84.1,False,2020-09-08,2026-04-30T04:36:50.726872
+SUP-0039,Graham-Bean,Zachary Terry,hollowayseth@ferrell-johnson.com,205-315-5674x092,759 Austin Burg Apt. 341,Morganstad,US,NET60,34,74.6,True,2024-08-08,2026-04-30T04:36:50.726872
+SUP-0040,"Ryan, Hughes and Mendoza",Sarah Logan,stephanie54@scott.com,8045645497,875 Michael Brook Suite 899,Port Julian,US,COD,76,64.3,False,2021-12-10,2026-04-30T04:36:50.726872
+SUP-0041,Stewart Group,Vincent Moreno,vmorrison@davis.com,(716)752-5081,3150 Parrish Vista,Port Tylerland,US,NET30,90,80.2,False,2023-09-14,2026-04-30T04:36:50.726872
+SUP-0042,Sutton-Castillo,Shannon Arellano,xhumphrey@garrett.com,001-823-619-7670x25461,6964 Juarez Row Apt. 441,East William,US,NET45,53,86.4,False,2024-11-24,2026-04-30T04:36:50.726872
+SUP-0043,Delacruz and Sons,Mackenzie Nelson,katrina92@ellis.com,001-644-889-4009x465,248 Castro Row,Waltonfort,IN,NET45,77,68.7,True,2021-09-15,2026-04-30T04:36:50.726872
+SUP-0044,"Little, Trujillo and Barnes",Kenneth Schaefer,uschmidt@hill.com,991-687-1628,7666 Heather Common Apt. 935,South Mary,US,NET45,74,76.1,False,2019-05-27,2026-04-30T04:36:50.726872
+SUP-0045,Ray-Wong,Jerome Hancock,abruce@leon.com,001-210-656-3967,7714 Michael Mission Suite 025,Lake Christopherstad,US,NET30,85,77.7,False,2020-09-22,2026-04-30T04:36:50.726872
+SUP-0046,Williamson-Johnson,Lisa Dean,stephen52@price-soto.info,748-645-5576x633,50953 Gina Estates,Mcfarlandfort,KR,NET45,89,96.5,False,2019-06-10,2026-04-30T04:36:50.726872
+SUP-0047,"Weber, Dominguez and Thomas",Gabriel Romero,tbrown@perkins.com,001-666-603-6698x0276,943 Williams Orchard,Phamchester,US,NET60,19,85.6,False,2021-05-06,2026-04-30T04:36:50.726872
+SUP-0048,Mendoza Group,Dawn Ramirez,fisherkeith@willis.com,+1-369-750-7259x25016,780 Weber Divide Apt. 070,New Bryanborough,US,NET45,79,97.7,False,2024-09-28,2026-04-30T04:36:50.726872
+SUP-0049,"Parker, Mclaughlin and Smith",Randy Evans,mariereynolds@thompson.com,+1-301-469-5991,4031 Amy Plaza Suite 914,Melendezshire,US,NET30,43,93.2,True,2021-04-17,2026-04-30T04:36:50.726872
+SUP-0050,Madden Ltd,Robert Mckenzie,haneycarrie@riggs-frazier.org,623-894-3837x542,7348 Brown Gardens,Port Tinaburgh,US,COD,71,93.7,False,2022-02-21,2026-04-30T04:36:50.726872
+SUP-0051,Tyler-Sutton,Jesse Harris,moralesmichael@gomez-moore.info,+1-992-544-8372x687,128 Ramos Parkways Suite 747,Calhounland,US,NET30,37,78.3,False,2018-10-08,2026-04-30T04:36:50.726872
+SUP-0052,Smith-Gray,Rachel Carlson,vedwards@garcia-stewart.com,280-920-4041,129 Wright Spurs,South Brian,IN,NET45,58,71.9,True,2019-11-10,2026-04-30T04:36:50.726872
+SUP-0053,Diaz-Rice,Manuel Walker,louis19@wood.com,3155845673,01749 Christopher Mission Suite 607,North Jackson,US,NET60,59,97.4,False,2019-03-18,2026-04-30T04:36:50.726872
+SUP-0054,"Fitzpatrick, Bolton and Horn",Jesse Young,qshepherd@miller.com,+1-849-326-2189x22400,654 House Center,Lake Lawrence,CA,NET45,88,78.5,False,2019-01-19,2026-04-30T04:36:50.726872
+SUP-0055,Wright-Daniels,Donald Ruiz,greerjennifer@mcknight.com,801-553-1195x96027,7966 Melanie Glens Suite 625,Bellview,US,NET30,34,76.8,False,2019-10-07,2026-04-30T04:36:50.726872
+SUP-0056,Collins LLC,Jasmine Mcdowell,xsherman@wolf.com,001-782-277-1148x8160,755 Williams Extension,Vasquezside,MX,NET45,69,61.8,True,2021-07-28,2026-04-30T04:36:50.726872
+SUP-0057,Clay-Baker,Anna Evans,julie94@goodman.com,680.950.1513x78626,2416 Kenneth Well,South Theresaside,US,NET60,55,77.4,False,2018-12-30,2026-04-30T04:36:50.726872
+SUP-0058,Valdez-Williams,Stephanie Robinson,barbara23@goodman.com,+1-905-741-7150x07601,800 Gaines Plaza,Haroldport,JP,COD,76,98.7,False,2021-06-15,2026-04-30T04:36:50.726872
+SUP-0059,Bryant-Garcia,Tammy Olson,hamiltontony@davis.com,+1-434-391-4309,72597 James Village Suite 408,East Gloriaton,MX,NET45,38,70.9,False,2021-04-06,2026-04-30T04:36:50.726872
+SUP-0060,"Silva, Adams and Mitchell",Shawn Myers,davisemily@peterson.com,4837610880,016 Jennifer Street Suite 370,West Sara,MX,NET45,9,69.2,True,2023-08-05,2026-04-30T04:36:50.726872
+SUP-0061,Dyer-Dean,James Nolan,grahamrobert@sullivan.biz,001-436-402-5368x7320,5080 Mendez Brook Suite 873,Pruittside,IN,NET60,75,98.7,False,2020-01-11,2026-04-30T04:36:50.726872
+SUP-0062,"Oneal, Mcclain and Fischer",Miss Jessica Morris,zachary39@blevins.com,(903)756-0897x06493,4790 Adkins View,North Jose,JP,NET30,89,72.8,False,2018-06-14,2026-04-30T04:36:50.726872
+SUP-0063,Freeman PLC,Caitlin Gibson,micheal30@raymond.com,298-657-5473,4062 Walter Tunnel,South Frankmouth,US,COD,43,85.9,True,2020-03-24,2026-04-30T04:36:50.726872
+SUP-0064,Smith Ltd,Joshua Jones,rachel13@moore-mcdonald.com,688.375.0513x918,1412 Tammy Views,South Jonathanton,TW,NET60,33,74.7,True,2020-08-30,2026-04-30T04:36:50.726872
+SUP-0065,"Madden, Jones and Patterson",Sara Robinson,thomasgraves@mueller.net,001-294-473-8793,39060 Gutierrez Loop Apt. 712,Mariaville,IN,NET30,15,66.0,True,2020-01-22,2026-04-30T04:36:50.726872
+SUP-0066,Harris-Bruce,Breanna Edwards,bradleypatricia@lane-kane.biz,336-753-1459x4568,951 James Fort,New Sethside,CA,NET45,38,78.7,True,2023-04-02,2026-04-30T04:36:50.726872
+SUP-0067,Rich-Norman,Michael Williams,alanmoore@allen.net,231.296.0250x92704,86668 Mcdonald Valleys Suite 260,South Leonard,TW,NET45,53,64.6,False,2024-07-26,2026-04-30T04:36:50.726872
+SUP-0068,"Obrien, Farley and Harris",Heather Maddox,dlee@hampton.com,6979019982,75186 Damon Port Suite 367,New Deborah,DE,COD,71,91.3,True,2018-11-27,2026-04-30T04:36:50.726872
+SUP-0069,Stephens-Berry,James Henson,gcastaneda@odonnell.info,001-704-225-2846,179 Eric Heights Apt. 997,Smithville,US,NET60,8,97.7,False,2018-09-05,2026-04-30T04:36:50.726872
+SUP-0070,"Brown, Lewis and Hansen",Joshua Horn,jonathan87@berry.com,+1-433-846-5867,13180 Warner Summit,Evansmouth,US,COD,43,83.9,False,2023-10-09,2026-04-30T04:36:50.726872
+SUP-0071,"Henson, Alvarez and Sutton",Alexander Jimenez,wilkinsonjason@thompson.com,912.368.8704x155,731 Cardenas Crest,Barnettfurt,DE,NET60,14,74.8,True,2019-07-01,2026-04-30T04:36:50.726872
+SUP-0072,Castillo-Guzman,Darlene Gonzalez,crawfordamy@perez-aguirre.com,+1-897-666-2084x0784,57746 Taylor Rapid,Dixonmouth,US,COD,82,96.0,True,2021-12-17,2026-04-30T04:36:50.726872
+SUP-0073,Welch-Stewart,Scott Hernandez,anna66@thompson-white.org,8722267940,4138 Samuel Fort,Lamberthaven,US,NET60,57,97.4,True,2020-03-09,2026-04-30T04:36:50.726872
+SUP-0074,Jensen and Sons,Mary Obrien,wtaylor@ibarra.biz,(796)961-0356,808 Gonzalez Run Apt. 492,Thomasbury,KR,COD,9,80.9,False,2023-08-29,2026-04-30T04:36:50.726872
+SUP-0075,Smith-Ross,Billy Short,yhensley@clayton.com,+1-709-610-0916x659,3001 Dyer Ways Suite 627,Michelleburgh,US,NET45,39,77.8,False,2025-03-03,2026-04-30T04:36:50.726872
+SUP-0076,Pruitt LLC,Miguel Morgan,mparks@porter.com,266-856-9107,71340 Michael Brooks,Nelsonberg,JP,NET60,9,91.2,True,2022-03-24,2026-04-30T04:36:50.726872
+SUP-0077,Odonnell-Scott,Kenneth Parker,bmorgan@jennings.com,577-941-1602x8595,9875 Brian Stream Apt. 552,Port Jeremy,KR,NET30,27,81.2,True,2025-03-07,2026-04-30T04:36:50.726872
+SUP-0078,Ross LLC,Alicia Hopkins,carriesimpson@ramirez.com,001-429-645-7867x40477,497 Kristin Turnpike Apt. 419,South Shannonland,CA,NET60,72,95.3,False,2018-07-06,2026-04-30T04:36:50.726872
+SUP-0079,Carlson Group,Dorothy Thompson,bethwright@fields-anderson.com,226.758.5970x24891,9991 Wang Village Suite 345,Bellville,US,COD,54,63.0,False,2023-11-11,2026-04-30T04:36:50.726872
+SUP-0080,Mcknight and Sons,Thomas Hill,gholt@perry.com,639-759-4357,731 Alexandra Cliffs,Port Charlesfurt,CN,NET45,80,93.6,False,2020-12-13,2026-04-30T04:36:50.726872

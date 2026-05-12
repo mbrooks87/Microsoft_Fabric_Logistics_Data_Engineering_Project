@@ -1,0 +1,11 @@
+warehouse_id,name,region,address,city,state,zip,capacity_sqft,num_docks,num_zones,manager_name,phone,is_active,_ingested_at
+WH-EAS-01,North Judithbury Distribution Center,EAST,18196 Anthony Forge,New Carolyn,OH,26563,50000,12,4,Meredith Barnes,394.802.6542x351,True,2026-04-30T04:36:50.726872
+WH-EAS-02,West Melanieview Distribution Center,EAST,781 Miller Hill,Barbaraland,AZ,87174,300000,21,3,Dylan Miller,516.647.5255,True,2026-04-30T04:36:50.726872
+WH-EAS-03,New Cynthiaside Distribution Center,EAST,76483 Cameron Trail,East Lydiamouth,MO,35594,50000,6,4,Thomas Bradley,001-653-876-7242x388,True,2026-04-30T04:36:50.726872
+WH-NOR-04,Coxberg Distribution Center,NORTHWEST,01226 Paul Ranch Suite 848,Lake Jenniferside,WV,35474,50000,21,4,Gina Carter,(570)448-2814,True,2026-04-30T04:36:50.726872
+WH-NOR-05,Kathrynside Distribution Center,NORTHWEST,570 Sarah Wells,Johnbury,FM,74865,150000,11,6,Angelica Tucker,882-527-8248,True,2026-04-30T04:36:50.726872
+WH-EAS-06,Lake Larry Distribution Center,EAST,8713 Caleb Brooks Apt. 930,Lake Crystalbury,CA,04618,75000,17,5,Andrea Young,+1-873-782-9973x76311,True,2026-04-30T04:36:50.726872
+WH-WES-07,Jenkinston Distribution Center,WEST,65133 Amanda Dam,Whitemouth,IA,10381,100000,7,3,Scott Pierce,5808132677,True,2026-04-30T04:36:50.726872
+WH-CEN-08,East Nicholasfurt Distribution Center,CENTRAL,4687 James Forge Apt. 980,Brianshire,NJ,66410,100000,23,5,Kim Brown,312.819.1361x93990,True,2026-04-30T04:36:50.726872
+WH-SOU-09,Sarahborough Distribution Center,SOUTH,46247 Hickman Cliffs Apt. 799,North Amandahaven,KS,17862,200000,7,6,Shirley Suarez,(442)678-4980x841,True,2026-04-30T04:36:50.726872
+WH-CEN-10,North Juliaberg Distribution Center,CENTRAL,9353 Wagner Glen Apt. 164,North Matthewberg,SC,34836,300000,23,5,Jeremy Thornton,+1-401-812-8059,True,2026-04-30T04:36:50.726872

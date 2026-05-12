@@ -1,6 +1,6 @@
 # Microsoft Fabric — WMS SQL-First Medallion Architecture
 
-A warehouse management system (WMS) data pipeline built entirely in SQL on Microsoft Fabric, following the Bronze → Silver → Gold medallion pattern.
+A warehouse management system (WMS) data pipeline built entirely in SQL on Microsoft Fabric, following the Bronze → Silver → Gold medallion pattern with a live IoT streaming layer.
 
 **47 Delta tables · ~300K source rows · 64 SQL cells · ~18 lines of PySpark**
 
@@ -19,22 +19,41 @@ Raw CSVs (Files/raw/)
 │    CTAS     │     │   dedup +   │     │                             │
 │             │     │ typed casts │     │  + IoT streaming (Part 4)   │
 └─────────────┘     └─────────────┘     └─────────────────────────────┘
+                                                      │
+                                                      ▼
+                                          ┌──────────────────────┐
+                                          │  Power BI / DirectLake│
+                                          │  Star schema reports  │
+                                          │  + Real-time IoT tiles│
+                                          └──────────────────────┘
 ```
 
 ---
 
-## Files
+## Repository Structure
 
 ```
-bronze/
-└── nb_bronze_ingest.sql       # Part 1 — 19 tables via read_files() CTAS
+notebooks/
+├── bronze/
+│   └── nb_bronze_ingest_sql.py      # Part 1 — 19 tables via read_files() CTAS
+├── silver/
+│   └── nb_silver_transform_sql.py   # Part 2 — 15 tables, CTE dedup + type casts
+├── gold/
+│   └── nb_gold_build_sql.py         # Part 3 — star schema + KPI marts + OPTIMIZE
+├── streaming/
+│   └── nb_iot_stream_sql.py         # Part 4 — Delta readStream, 1-hour window agg
+└── tests/
+    └── nb_dq_validation.py          # Data quality validation across all layers
 
-silver/
-└── nb_silver_transform.sql    # Part 2 — 15 tables, CTE dedup + type casts
+data/                                # 19 raw CSV source files
+docs/
+└── WMS_Fabric_SQL_Medallion_Full.pdf
 
-gold/
-├── nb_gold_build.sql          # Part 3 — star schema + KPI marts + OPTIMIZE
-└── nb_iot_stream.sql          # Part 4 — Delta readStream, 1-hour window agg
+.github/
+└── workflows/
+    └── deploy.yml                   # CI/CD pipeline
+
+bundle.yml                           # Databricks Asset Bundle config
 ```
 
 ---
@@ -98,18 +117,20 @@ gold/
 
 **CTE pre-aggregation in gold_fact_orders:** `line_agg` and `ship_agg` CTEs roll 128k line rows and 30k shipment rows up to order grain before joining back to `silver_orders`, enabling a broadcast join instead of a full shuffle.
 
+**Streaming architecture:** `raw_iot_events` is ingested in Bronze with `delta.enableChangeDataFeed = true`, enabling the streaming notebook to consume only new rows incrementally via `readStream`. This produces hourly window aggregates in `gold_kpi_iot_stream` alongside the daily batch `gold_kpi_iot_summary` — two views of the same data for different reporting needs.
+
 ---
 
 ## Pipeline Order
 
 ```
-[nb_bronze_ingest]  --on success-->
-[nb_silver_transform]  --on success-->
-[nb_gold_build]  --on success-->
-[Wait 5 min]  --on success-->
+[nb_bronze_ingest_sql]    --on success-->
+[nb_silver_transform_sql] --on success-->
+[nb_gold_build_sql]       --on success-->
+[Wait 5 min]              --on success-->
 [Power BI semantic model refresh]
 
-[nb_iot_stream]  <-- runs continuously as a separate always-on job
+[nb_iot_stream_sql]  <-- runs continuously as a separate always-on job
 ```
 
 ---
@@ -120,3 +141,43 @@ gold/
 - `delta.enableChangeDataFeed = true` on `raw_iot_events` is required for the streaming notebook. Do not disable it once the stream is running.
 - `CREATE OR REPLACE TABLE` is a full overwrite. For incremental production loads replace with `INSERT INTO ... WHERE <date_col> > (SELECT MAX(...))`.
 - Run the validation query at the end of each notebook before proceeding to the next layer.
+- The streaming notebook runs as a **separate always-on job** — it is not part of the daily batch pipeline.
+
+---
+
+## Tech Stack
+
+| Tool | Purpose |
+|---|---|
+| Microsoft Fabric | Unified data platform (Lakehouse, Notebooks, Pipelines) |
+| Apache Spark SQL | All transformation logic |
+| Delta Lake | Storage format with ACID, CDF, streaming support |
+| Power BI / DirectLake | Reporting and real-time IoT dashboard tiles |
+| GitHub Actions | CI/CD deployment |
+
+---
+
+## About Me
+
+Hi, I'm **Marcus Brooks** — a Data Engineer based in Atlanta, GA with a focus on cloud-native data platforms, SQL-first pipeline design, and Microsoft Fabric.
+
+I built this project to demonstrate end-to-end data engineering on Microsoft Fabric — from raw CSV ingestion through a full medallion architecture to a star schema optimized for Power BI, with a live IoT streaming layer on top.
+
+### What I Work With
+
+- **Microsoft Fabric** — Lakehouse, Notebooks, Data Factory pipelines, DirectLake
+- **SQL / Spark SQL** — transformation, aggregation, window functions, CTEs
+- **Delta Lake** — ACID transactions, Change Data Feed, streaming, OPTIMIZE/ZORDER
+- **PySpark** — used surgically where SQL can't reach (readStream/writeStream)
+- **Power BI** — semantic modeling, DAX, DirectLake connections
+- **Azure** — Data Factory, ADLS Gen2, Synapse
+- **CI/CD** — GitHub Actions, Databricks Asset Bundles
+
+### Connect
+
+- 🔗 [LinkedIn](https://www.linkedin.com/in/marcusbrooks87)
+- 💻 [GitHub](https://github.com/mbrooks87)
+
+---
+
+*Feel free to fork, clone, or reach out with questions.*

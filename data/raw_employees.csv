@@ -1,0 +1,201 @@
+employee_id,first_name,last_name,email,role,warehouse_id,shift,hire_date,hourly_rate,is_active,_ingested_at
+EMP-00001,Dana,Davis,floresjose@villegas-wagner.com,Dock Supervisor,WH-WES-07,MORNING,2024-04-10,24.1,True,2026-04-30T04:36:50.726872
+EMP-00002,Cynthia,Bryant,bbrown@johnson-watson.com,Shipping Clerk,WH-EAS-02,NIGHT,2025-10-03,36.5,True,2026-04-30T04:36:50.726872
+EMP-00003,Richard,Anderson,jacobsullivan@reeves-russo.com,QA Inspector,WH-SOU-09,MORNING,2021-06-06,23.78,True,2026-04-30T04:36:50.726872
+EMP-00004,Ronald,Chavez,rosariotyler@williams.net,Forklift Operator,WH-SOU-09,NIGHT,2025-08-11,28.12,True,2026-04-30T04:36:50.726872
+EMP-00005,Yolanda,Newton,scottmiddleton@simpson-murphy.com,Picker,WH-EAS-06,NIGHT,2025-08-08,22.36,True,2026-04-30T04:36:50.726872
+EMP-00006,Brianna,Hamilton,paultrujillo@turner.org,QA Inspector,WH-NOR-05,MORNING,2024-12-18,28.04,True,2026-04-30T04:36:50.726872
+EMP-00007,Emily,Holden,shaun92@martin.com,QA Inspector,WH-NOR-05,AFTERNOON,2021-03-07,35.49,True,2026-04-30T04:36:50.726872
+EMP-00008,Robert,Hardin,stewartjennifer@martin-mcfarland.info,Picker,WH-NOR-04,MORNING,2024-12-12,30.9,True,2026-04-30T04:36:50.726872
+EMP-00009,Marie,Mcknight,wardmartin@lee.com,Forklift Operator,WH-CEN-10,NIGHT,2025-11-01,28.44,False,2026-04-30T04:36:50.726872
+EMP-00010,Sean,Everett,charlesortega@evans.com,Packer,WH-EAS-03,MORNING,2025-07-26,32.53,False,2026-04-30T04:36:50.726872
+EMP-00011,Marie,Curry,ogray@thomas.com,Receiving Clerk,WH-WES-07,AFTERNOON,2020-09-10,27.74,False,2026-04-30T04:36:50.726872
+EMP-00012,George,Rice,elizabeth95@santiago.com,Forklift Operator,WH-CEN-08,NIGHT,2020-05-14,26.83,True,2026-04-30T04:36:50.726872
+EMP-00013,Michael,Fields,jeremy06@davis.com,Dock Supervisor,WH-SOU-09,NIGHT,2023-02-21,30.76,True,2026-04-30T04:36:50.726872
+EMP-00014,Rachel,Eaton,nandersen@cross.org,Warehouse Associate,WH-EAS-03,NIGHT,2026-02-21,26.45,True,2026-04-30T04:36:50.726872
+EMP-00015,Gary,Pitts,ymitchell@hampton-white.net,Picker,WH-NOR-04,MORNING,2026-01-29,16.64,False,2026-04-30T04:36:50.726872
+EMP-00016,Cheryl,Stewart,jonesnicole@barnett.net,Warehouse Associate,WH-CEN-08,NIGHT,2024-07-05,21.37,True,2026-04-30T04:36:50.726872
+EMP-00017,Dennis,Douglas,mnguyen@quinn.com,Packer,WH-EAS-01,AFTERNOON,2022-06-18,20.41,True,2026-04-30T04:36:50.726872
+EMP-00018,Destiny,Adams,wheeleranne@nelson.biz,Receiving Clerk,WH-NOR-05,NIGHT,2021-10-27,30.12,True,2026-04-30T04:36:50.726872
+EMP-00019,Cynthia,Caldwell,adam92@griffin-ortega.com,Inventory Analyst,WH-CEN-08,MORNING,2024-02-27,23.86,True,2026-04-30T04:36:50.726872
+EMP-00020,Melissa,Perez,arice@wallace.net,Receiving Clerk,WH-EAS-03,AFTERNOON,2021-08-26,27.24,True,2026-04-30T04:36:50.726872
+EMP-00021,Michael,Lucas,tylersharon@delgado.info,Picker,WH-EAS-01,AFTERNOON,2021-06-08,23.61,True,2026-04-30T04:36:50.726872
+EMP-00022,Wendy,Woods,hillmaria@perry-bean.com,Inventory Analyst,WH-CEN-10,AFTERNOON,2025-08-04,21.19,False,2026-04-30T04:36:50.726872
+EMP-00023,Ricky,Powell,yparks@schmitt.com,Warehouse Associate,WH-NOR-04,NIGHT,2020-10-15,30.17,True,2026-04-30T04:36:50.726872
+EMP-00024,Jennifer,Young,mackaaron@myers.com,Forklift Operator,WH-SOU-09,AFTERNOON,2024-03-08,34.04,True,2026-04-30T04:36:50.726872
+EMP-00025,Nicholas,Torres,robert65@ellis.info,Picker,WH-NOR-05,NIGHT,2024-05-28,20.01,True,2026-04-30T04:36:50.726872
+EMP-00026,Terri,Miller,morganryan@mendez-sparks.com,Forklift Operator,WH-EAS-06,AFTERNOON,2022-05-18,23.76,False,2026-04-30T04:36:50.726872
+EMP-00027,John,Salazar,patricia62@collins.com,QA Inspector,WH-CEN-10,NIGHT,2023-11-19,33.48,True,2026-04-30T04:36:50.726872
+EMP-00028,Mary,Monroe,jeffrey73@morris.com,Warehouse Associate,WH-CEN-08,NIGHT,2024-12-11,17.33,True,2026-04-30T04:36:50.726872
+EMP-00029,Candace,Tapia,reidmarilyn@riley.org,Dock Supervisor,WH-CEN-08,NIGHT,2025-11-06,28.05,False,2026-04-30T04:36:50.726872
+EMP-00030,Nicholas,Bell,mendozamichele@reynolds.biz,Inventory Analyst,WH-CEN-10,AFTERNOON,2025-06-18,30.21,True,2026-04-30T04:36:50.726872
+EMP-00031,Brian,Hamilton,kbrown@adams.info,Dock Supervisor,WH-CEN-08,MORNING,2025-11-29,27.84,True,2026-04-30T04:36:50.726872
+EMP-00032,Mary,Bowman,bramos@harris.biz,Inventory Analyst,WH-WES-07,NIGHT,2024-02-04,16.72,False,2026-04-30T04:36:50.726872
+EMP-00033,Antonio,Conrad,jnunez@nelson-fisher.com,Shipping Clerk,WH-SOU-09,NIGHT,2021-08-04,36.44,True,2026-04-30T04:36:50.726872
+EMP-00034,Edward,Roy,andrewcaldwell@weaver-collins.info,Dock Supervisor,WH-CEN-08,NIGHT,2024-03-04,21.41,True,2026-04-30T04:36:50.726872
+EMP-00035,Melissa,Ryan,jonathanrobinson@howell-andersen.biz,Forklift Operator,WH-CEN-10,MORNING,2024-11-25,37.24,True,2026-04-30T04:36:50.726872
+EMP-00036,Glenda,Davies,gdowns@mcmillan.com,QA Inspector,WH-CEN-10,AFTERNOON,2020-08-18,24.07,True,2026-04-30T04:36:50.726872
+EMP-00037,Ashley,Alexander,jonathan59@smith-burnett.com,Warehouse Associate,WH-EAS-01,MORNING,2022-03-01,30.67,True,2026-04-30T04:36:50.726872
+EMP-00038,Patrick,Hodge,jonesmark@hubbard-boyd.com,Forklift Operator,WH-NOR-04,NIGHT,2022-09-06,29.72,False,2026-04-30T04:36:50.726872
+EMP-00039,Andrew,Moore,staceygoodwin@parker-lynch.com,Shipping Clerk,WH-EAS-03,AFTERNOON,2025-10-10,22.4,True,2026-04-30T04:36:50.726872
+EMP-00040,John,Miller,brian42@patrick.org,Picker,WH-SOU-09,NIGHT,2023-10-19,23.45,True,2026-04-30T04:36:50.726872
+EMP-00041,Danielle,Harrison,hogandavid@gallegos.com,Forklift Operator,WH-EAS-01,MORNING,2022-05-18,34.98,True,2026-04-30T04:36:50.726872
+EMP-00042,Patrick,Carpenter,johnsonraven@williams.org,QA Inspector,WH-EAS-01,NIGHT,2022-07-21,19.02,True,2026-04-30T04:36:50.726872
+EMP-00043,Brian,Reed,murphycassidy@jensen.info,QA Inspector,WH-CEN-08,MORNING,2025-02-01,35.14,True,2026-04-30T04:36:50.726872
+EMP-00044,Anne,Davis,deangina@clarke-nichols.com,QA Inspector,WH-NOR-04,MORNING,2020-07-03,24.15,True,2026-04-30T04:36:50.726872
+EMP-00045,Cindy,Anthony,dbernard@henderson.com,Picker,WH-EAS-06,NIGHT,2022-12-12,33.16,True,2026-04-30T04:36:50.726872
+EMP-00046,Michelle,Patterson,ypitts@garcia.com,QA Inspector,WH-EAS-01,MORNING,2025-07-05,24.37,True,2026-04-30T04:36:50.726872
+EMP-00047,Joshua,Waller,eoneal@hawkins.com,Warehouse Associate,WH-NOR-05,MORNING,2024-09-27,23.51,True,2026-04-30T04:36:50.726872
+EMP-00048,Julie,Cooper,joshuagregory@dean-castillo.org,Forklift Operator,WH-CEN-08,AFTERNOON,2026-04-19,20.06,True,2026-04-30T04:36:50.726872
+EMP-00049,Marcus,Washington,yolanda03@gonzalez.com,Packer,WH-EAS-06,AFTERNOON,2024-09-30,24.37,True,2026-04-30T04:36:50.726872
+EMP-00050,Michelle,Davis,bridget96@mejia.com,Inventory Analyst,WH-CEN-08,NIGHT,2025-07-09,36.21,True,2026-04-30T04:36:50.726872
+EMP-00051,Kevin,Spears,gbaker@nelson.net,Shipping Clerk,WH-EAS-06,AFTERNOON,2022-02-16,23.82,True,2026-04-30T04:36:50.726872
+EMP-00052,Howard,Cox,millerderek@hall-baker.org,Inventory Analyst,WH-EAS-06,MORNING,2021-06-18,35.66,True,2026-04-30T04:36:50.726872
+EMP-00053,Tonya,Ramos,eterry@schmidt.com,Receiving Clerk,WH-WES-07,MORNING,2026-02-06,28.61,True,2026-04-30T04:36:50.726872
+EMP-00054,Gabriel,Hunter,christinapaul@wood.net,Warehouse Associate,WH-EAS-02,AFTERNOON,2021-11-14,27.55,True,2026-04-30T04:36:50.726872
+EMP-00055,Christopher,Mills,wilsonlawrence@woods-guzman.com,Shipping Clerk,WH-EAS-02,NIGHT,2026-01-16,21.32,True,2026-04-30T04:36:50.726872
+EMP-00056,Tammy,Berg,clarkamy@mcgrath-shaffer.com,Forklift Operator,WH-EAS-06,MORNING,2021-08-30,32.39,True,2026-04-30T04:36:50.726872
+EMP-00057,Rebecca,Harris,alexander39@allen-ford.com,Inventory Analyst,WH-EAS-03,MORNING,2023-01-17,36.76,True,2026-04-30T04:36:50.726872
+EMP-00058,Edward,Hooper,dylanyoung@thomas.info,QA Inspector,WH-SOU-09,MORNING,2025-03-23,33.16,True,2026-04-30T04:36:50.726872
+EMP-00059,Norma,Nguyen,amartin@gonzalez-walker.com,Inventory Analyst,WH-EAS-02,MORNING,2020-06-06,29.62,True,2026-04-30T04:36:50.726872
+EMP-00060,Robert,Green,kelsey80@casey-jackson.com,Packer,WH-NOR-05,AFTERNOON,2020-09-05,27.07,True,2026-04-30T04:36:50.726872
+EMP-00061,Thomas,Shelton,aprillopez@reed.com,Inventory Analyst,WH-EAS-03,MORNING,2024-03-02,33.78,True,2026-04-30T04:36:50.726872
+EMP-00062,Andrew,Patterson,crystalward@lynn.net,Forklift Operator,WH-CEN-08,NIGHT,2020-11-02,24.79,True,2026-04-30T04:36:50.726872
+EMP-00063,Michael,Ryan,robertcampos@beck.com,Shipping Clerk,WH-CEN-08,MORNING,2020-06-30,17.05,True,2026-04-30T04:36:50.726872
+EMP-00064,Bryan,Wood,cynthiacole@mcneil.com,QA Inspector,WH-EAS-03,AFTERNOON,2021-02-19,36.95,True,2026-04-30T04:36:50.726872
+EMP-00065,Maria,Baxter,vwoods@rosales-gardner.biz,Inventory Analyst,WH-NOR-04,MORNING,2022-02-15,32.06,True,2026-04-30T04:36:50.726872
+EMP-00066,Jill,Davis,lhuerta@kennedy.com,Forklift Operator,WH-NOR-05,AFTERNOON,2022-06-09,16.71,True,2026-04-30T04:36:50.726872
+EMP-00067,William,Ryan,yatesjanet@patton.org,Receiving Clerk,WH-WES-07,MORNING,2023-08-24,22.73,True,2026-04-30T04:36:50.726872
+EMP-00068,Laurie,Rivera,megan76@drake-cook.com,Picker,WH-CEN-10,AFTERNOON,2025-08-26,18.44,True,2026-04-30T04:36:50.726872
+EMP-00069,Mark,Reyes,ericweaver@harris.com,Packer,WH-SOU-09,MORNING,2026-01-30,24.28,True,2026-04-30T04:36:50.726872
+EMP-00070,Joseph,Haas,hmartinez@west.biz,Forklift Operator,WH-EAS-06,AFTERNOON,2020-09-13,28.79,True,2026-04-30T04:36:50.726872
+EMP-00071,Ruth,Reynolds,cassiebaker@johnson.net,Picker,WH-EAS-01,AFTERNOON,2022-01-09,36.39,True,2026-04-30T04:36:50.726872
+EMP-00072,April,Hernandez,chadthomas@black.com,Shipping Clerk,WH-EAS-02,MORNING,2024-06-13,33.71,True,2026-04-30T04:36:50.726872
+EMP-00073,William,Haynes,christensenjohn@lee.com,Forklift Operator,WH-EAS-06,AFTERNOON,2025-11-12,25.24,True,2026-04-30T04:36:50.726872
+EMP-00074,Stephanie,Campos,lesliejohnson@reyes.com,Packer,WH-EAS-02,MORNING,2021-10-03,33.7,True,2026-04-30T04:36:50.726872
+EMP-00075,Amy,Payne,byrdsherry@malone.com,Receiving Clerk,WH-NOR-05,NIGHT,2024-10-17,31.77,True,2026-04-30T04:36:50.726872
+EMP-00076,Casey,Wilkerson,stevensjustin@thompson.com,Receiving Clerk,WH-NOR-04,NIGHT,2022-05-28,32.99,True,2026-04-30T04:36:50.726872
+EMP-00077,Kimberly,Gutierrez,romeromatthew@bates.com,Forklift Operator,WH-CEN-08,AFTERNOON,2022-02-08,28.26,True,2026-04-30T04:36:50.726872
+EMP-00078,Leah,Freeman,pittmanglenn@page.com,Warehouse Associate,WH-NOR-04,AFTERNOON,2025-01-29,34.12,True,2026-04-30T04:36:50.726872
+EMP-00079,Kimberly,Walker,espinozacharles@brown.com,Packer,WH-EAS-03,MORNING,2026-04-07,33.13,True,2026-04-30T04:36:50.726872
+EMP-00080,John,Wise,fhudson@benjamin-bennett.com,Receiving Clerk,WH-SOU-09,MORNING,2021-10-29,37.87,True,2026-04-30T04:36:50.726872
+EMP-00081,David,Martinez,jonesalicia@kennedy.com,Shipping Clerk,WH-CEN-10,AFTERNOON,2021-03-20,28.55,True,2026-04-30T04:36:50.726872
+EMP-00082,David,Oconnell,christine74@smith-brown.com,QA Inspector,WH-CEN-10,MORNING,2021-03-27,28.46,True,2026-04-30T04:36:50.726872
+EMP-00083,Dean,Burns,westkaren@thompson-sanchez.com,Packer,WH-CEN-10,AFTERNOON,2024-07-11,31.06,True,2026-04-30T04:36:50.726872
+EMP-00084,Melissa,Fox,salasamanda@cain.com,Inventory Analyst,WH-EAS-03,MORNING,2021-04-25,19.02,True,2026-04-30T04:36:50.726872
+EMP-00085,Parker,Anderson,zjackson@tran.com,Picker,WH-SOU-09,MORNING,2020-05-29,18.01,True,2026-04-30T04:36:50.726872
+EMP-00086,Bailey,Perez,smithrachel@stevens.com,Inventory Analyst,WH-WES-07,NIGHT,2023-01-30,32.13,True,2026-04-30T04:36:50.726872
+EMP-00087,Caleb,Sanders,ericdaniels@jones.info,Packer,WH-CEN-08,MORNING,2020-08-06,21.52,True,2026-04-30T04:36:50.726872
+EMP-00088,Gregory,Jefferson,walllarry@glenn.biz,Dock Supervisor,WH-CEN-08,MORNING,2025-07-26,37.82,False,2026-04-30T04:36:50.726872
+EMP-00089,Paul,Grimes,lisajohnson@simpson-kline.com,Packer,WH-CEN-08,MORNING,2020-08-19,16.74,True,2026-04-30T04:36:50.726872
+EMP-00090,Cynthia,Campbell,hortonashley@smith.com,QA Inspector,WH-CEN-10,MORNING,2022-04-09,29.8,True,2026-04-30T04:36:50.726872
+EMP-00091,John,Clark,rodriguezrichard@fisher.com,Warehouse Associate,WH-NOR-05,MORNING,2020-08-17,23.4,True,2026-04-30T04:36:50.726872
+EMP-00092,Larry,Bass,nicholas17@johnson.com,Packer,WH-NOR-04,NIGHT,2023-03-14,20.93,True,2026-04-30T04:36:50.726872
+EMP-00093,Craig,Walker,anthonyfoster@brown.com,Receiving Clerk,WH-NOR-05,AFTERNOON,2022-10-27,29.24,True,2026-04-30T04:36:50.726872
+EMP-00094,Theresa,Woods,littlejames@welch.com,Warehouse Associate,WH-EAS-02,AFTERNOON,2025-02-12,35.73,True,2026-04-30T04:36:50.726872
+EMP-00095,Brendan,Pope,donnaholmes@castillo-gonzalez.org,Dock Supervisor,WH-EAS-06,MORNING,2021-03-09,34.27,True,2026-04-30T04:36:50.726872
+EMP-00096,Brianna,Russo,parkanthony@evans.info,Inventory Analyst,WH-EAS-03,AFTERNOON,2023-05-24,31.71,True,2026-04-30T04:36:50.726872
+EMP-00097,Bradley,Reeves,pstone@adams.com,Forklift Operator,WH-NOR-04,MORNING,2020-06-23,34.25,True,2026-04-30T04:36:50.726872
+EMP-00098,Jeffrey,Scott,michelle58@lowe.com,Receiving Clerk,WH-EAS-02,AFTERNOON,2025-10-17,17.06,True,2026-04-30T04:36:50.726872
+EMP-00099,Evan,Davis,farmerrobin@taylor.com,Warehouse Associate,WH-SOU-09,NIGHT,2021-02-17,18.15,True,2026-04-30T04:36:50.726872
+EMP-00100,Nicholas,Bailey,sullivanalfred@rodriguez.info,Picker,WH-EAS-06,NIGHT,2023-04-01,32.73,False,2026-04-30T04:36:50.726872
+EMP-00101,David,Bird,peterberger@walters-lang.com,Picker,WH-NOR-04,NIGHT,2023-09-27,29.66,True,2026-04-30T04:36:50.726872
+EMP-00102,Clinton,Myers,dorothynunez@burton.org,Receiving Clerk,WH-EAS-01,AFTERNOON,2026-01-21,25.08,True,2026-04-30T04:36:50.726872
+EMP-00103,Ryan,Coleman,kmueller@thomas.com,Picker,WH-EAS-06,NIGHT,2025-01-19,29.56,True,2026-04-30T04:36:50.726872
+EMP-00104,Tiffany,Miller,claytonpatrick@morgan.com,Dock Supervisor,WH-WES-07,NIGHT,2021-01-28,29.5,True,2026-04-30T04:36:50.726872
+EMP-00105,Johnny,Glover,lwilson@pace-rogers.com,Forklift Operator,WH-NOR-04,MORNING,2022-11-06,31.34,True,2026-04-30T04:36:50.726872
+EMP-00106,Michael,Richardson,kruegersusan@thomas.com,Warehouse Associate,WH-EAS-02,NIGHT,2023-12-15,31.15,True,2026-04-30T04:36:50.726872
+EMP-00107,Jennifer,Bell,ugonzalez@pruitt-king.info,Picker,WH-EAS-01,NIGHT,2026-03-06,27.15,False,2026-04-30T04:36:50.726872
+EMP-00108,Don,King,csoto@johnson.com,Shipping Clerk,WH-EAS-01,NIGHT,2020-10-22,25.55,True,2026-04-30T04:36:50.726872
+EMP-00109,Deanna,Wilson,cortega@hernandez.biz,Receiving Clerk,WH-NOR-05,MORNING,2020-05-17,34.65,True,2026-04-30T04:36:50.726872
+EMP-00110,Scott,Rodriguez,muelleralexander@cox.com,Dock Supervisor,WH-EAS-06,NIGHT,2022-01-17,33.23,True,2026-04-30T04:36:50.726872
+EMP-00111,Donna,Miller,julia76@mcknight.com,QA Inspector,WH-SOU-09,NIGHT,2025-03-23,20.64,True,2026-04-30T04:36:50.726872
+EMP-00112,Michael,Howe,rwood@davis.info,Forklift Operator,WH-NOR-04,AFTERNOON,2025-07-19,23.7,True,2026-04-30T04:36:50.726872
+EMP-00113,Barry,Wise,angela81@lopez-harris.org,Warehouse Associate,WH-EAS-03,MORNING,2023-10-12,27.78,True,2026-04-30T04:36:50.726872
+EMP-00114,Christine,Mckee,hodgessusan@martin.com,QA Inspector,WH-EAS-03,NIGHT,2024-01-07,24.54,False,2026-04-30T04:36:50.726872
+EMP-00115,Stephanie,Taylor,harringtonsherri@hughes-le.info,Shipping Clerk,WH-EAS-06,AFTERNOON,2023-07-11,37.98,True,2026-04-30T04:36:50.726872
+EMP-00116,Jordan,Peters,patrick50@green.com,Packer,WH-CEN-10,AFTERNOON,2025-11-04,33.31,False,2026-04-30T04:36:50.726872
+EMP-00117,Michelle,Blackwell,john99@moore.org,Shipping Clerk,WH-SOU-09,MORNING,2025-04-01,33.23,True,2026-04-30T04:36:50.726872
+EMP-00118,Nicole,Robertson,smithabigail@rogers.net,Warehouse Associate,WH-SOU-09,NIGHT,2026-01-28,36.04,True,2026-04-30T04:36:50.726872
+EMP-00119,Michele,Morris,donald32@melton.org,Warehouse Associate,WH-NOR-04,AFTERNOON,2021-04-30,35.38,True,2026-04-30T04:36:50.726872
+EMP-00120,Amanda,Oconnell,maxwelljacob@lamb.com,Receiving Clerk,WH-EAS-03,MORNING,2021-12-25,27.94,True,2026-04-30T04:36:50.726872
+EMP-00121,Alexis,Hamilton,pamelagross@walker.net,Receiving Clerk,WH-WES-07,AFTERNOON,2022-10-15,25.94,True,2026-04-30T04:36:50.726872
+EMP-00122,Andrew,Rojas,zmarshall@thomas.com,Dock Supervisor,WH-WES-07,AFTERNOON,2020-06-21,27.62,True,2026-04-30T04:36:50.726872
+EMP-00123,Mark,Kirk,laneaustin@good-carter.com,Shipping Clerk,WH-EAS-02,AFTERNOON,2023-04-16,21.46,True,2026-04-30T04:36:50.726872
+EMP-00124,Sharon,Ramirez,hgarza@wright-gibson.biz,Forklift Operator,WH-EAS-01,AFTERNOON,2024-04-30,21.4,True,2026-04-30T04:36:50.726872
+EMP-00125,Jared,Schneider,darrenholt@stewart.biz,Inventory Analyst,WH-EAS-03,NIGHT,2025-07-01,26.01,True,2026-04-30T04:36:50.726872
+EMP-00126,Leonard,Melendez,annawhite@perez-baldwin.com,Packer,WH-NOR-05,AFTERNOON,2021-10-01,27.54,True,2026-04-30T04:36:50.726872
+EMP-00127,Sylvia,Gould,mavila@hensley.com,Packer,WH-EAS-02,NIGHT,2023-02-07,33.19,True,2026-04-30T04:36:50.726872
+EMP-00128,Robert,Hubbard,bradshawjoseph@hall.biz,Packer,WH-EAS-06,AFTERNOON,2024-09-25,20.33,True,2026-04-30T04:36:50.726872
+EMP-00129,Denise,Hall,scruz@miller.com,Shipping Clerk,WH-NOR-04,NIGHT,2025-08-29,24.65,True,2026-04-30T04:36:50.726872
+EMP-00130,Christopher,Garcia,moorejoseph@patterson.info,Dock Supervisor,WH-SOU-09,AFTERNOON,2022-06-15,19.04,True,2026-04-30T04:36:50.726872
+EMP-00131,Jessica,Lewis,amandajones@fox.com,Picker,WH-NOR-04,AFTERNOON,2022-10-08,18.14,True,2026-04-30T04:36:50.726872
+EMP-00132,Charles,Cooper,zbaldwin@brady-thomas.com,Forklift Operator,WH-WES-07,NIGHT,2020-11-18,32.59,True,2026-04-30T04:36:50.726872
+EMP-00133,Daniel,Lutz,kjames@wallace.info,Inventory Analyst,WH-EAS-06,NIGHT,2024-11-27,30.06,True,2026-04-30T04:36:50.726872
+EMP-00134,Timothy,Moody,jessicacollins@summers-morris.com,Inventory Analyst,WH-NOR-05,MORNING,2023-11-17,32.44,True,2026-04-30T04:36:50.726872
+EMP-00135,Monica,Hayes,calebdavis@hunt-murphy.com,Receiving Clerk,WH-WES-07,NIGHT,2023-10-07,32.69,False,2026-04-30T04:36:50.726872
+EMP-00136,Richard,Kennedy,smithmiranda@barron.com,Receiving Clerk,WH-CEN-08,AFTERNOON,2021-05-21,18.42,True,2026-04-30T04:36:50.726872
+EMP-00137,Kenneth,Contreras,ghunter@brooks-hamilton.net,Picker,WH-NOR-04,AFTERNOON,2024-10-30,35.36,True,2026-04-30T04:36:50.726872
+EMP-00138,Tammy,Wu,penny89@potter.com,Inventory Analyst,WH-NOR-05,AFTERNOON,2022-09-19,34.72,True,2026-04-30T04:36:50.726872
+EMP-00139,Justin,Morales,angelacasey@jones-harris.biz,Dock Supervisor,WH-WES-07,MORNING,2020-08-12,16.69,False,2026-04-30T04:36:50.726872
+EMP-00140,Sara,Cain,zrobinson@davenport-miller.org,Packer,WH-EAS-02,NIGHT,2021-12-26,37.04,True,2026-04-30T04:36:50.726872
+EMP-00141,Hannah,Black,shannonanderson@lawrence.net,Forklift Operator,WH-EAS-03,AFTERNOON,2020-05-20,33.17,False,2026-04-30T04:36:50.726872
+EMP-00142,Kevin,Smith,aaronvillanueva@cobb.com,QA Inspector,WH-WES-07,NIGHT,2023-09-29,26.64,True,2026-04-30T04:36:50.726872
+EMP-00143,Justin,Gutierrez,jessicagonzalez@dickson.com,Forklift Operator,WH-EAS-02,NIGHT,2024-05-13,34.93,False,2026-04-30T04:36:50.726872
+EMP-00144,Deborah,Barron,cynthiapacheco@garcia.com,Warehouse Associate,WH-NOR-04,AFTERNOON,2025-12-06,33.65,True,2026-04-30T04:36:50.726872
+EMP-00145,Bethany,Diaz,austinthompson@sanders.biz,Inventory Analyst,WH-EAS-01,NIGHT,2020-10-05,23.48,True,2026-04-30T04:36:50.726872
+EMP-00146,Denise,Sanchez,charles78@powell-moore.info,Warehouse Associate,WH-EAS-01,NIGHT,2022-12-17,20.66,True,2026-04-30T04:36:50.726872
+EMP-00147,Carla,Smith,robertvazquez@schmidt-jones.com,Packer,WH-WES-07,NIGHT,2026-03-27,36.25,True,2026-04-30T04:36:50.726872
+EMP-00148,Anthony,Matthews,ecastillo@schmidt.com,QA Inspector,WH-EAS-02,MORNING,2024-02-08,20.56,True,2026-04-30T04:36:50.726872
+EMP-00149,Chelsea,Walker,rebecca93@waters.com,Shipping Clerk,WH-EAS-01,MORNING,2024-02-20,22.41,True,2026-04-30T04:36:50.726872
+EMP-00150,Debbie,Black,ronald53@stewart.net,Shipping Clerk,WH-SOU-09,AFTERNOON,2021-08-03,20.56,True,2026-04-30T04:36:50.726872
+EMP-00151,John,Levy,bradjackson@olsen-perry.com,Warehouse Associate,WH-CEN-08,MORNING,2023-03-23,16.84,True,2026-04-30T04:36:50.726872
+EMP-00152,Ryan,Preston,jerrywilliams@price.org,Warehouse Associate,WH-CEN-10,AFTERNOON,2022-09-14,31.82,True,2026-04-30T04:36:50.726872
+EMP-00153,Paul,Johnson,hilltonya@hoffman.com,Packer,WH-NOR-05,MORNING,2022-11-01,29.27,True,2026-04-30T04:36:50.726872
+EMP-00154,Samuel,Braun,benjaminhoffman@anderson-dunn.com,Shipping Clerk,WH-CEN-10,NIGHT,2024-08-11,24.82,True,2026-04-30T04:36:50.726872
+EMP-00155,Mark,Lopez,jstephens@park-castillo.com,Shipping Clerk,WH-EAS-03,MORNING,2021-06-06,37.59,True,2026-04-30T04:36:50.726872
+EMP-00156,Lauren,Stevens,ajohnson@carr.com,Warehouse Associate,WH-EAS-06,AFTERNOON,2025-10-10,19.3,True,2026-04-30T04:36:50.726872
+EMP-00157,Carl,Allen,simmonskendra@jones-gutierrez.net,QA Inspector,WH-EAS-01,MORNING,2022-06-17,18.91,False,2026-04-30T04:36:50.726872
+EMP-00158,Deanna,Rubio,tsullivan@lowe.com,Packer,WH-CEN-08,MORNING,2023-11-13,22.32,True,2026-04-30T04:36:50.726872
+EMP-00159,Kimberly,Escobar,michael57@olson-crawford.net,Shipping Clerk,WH-EAS-06,NIGHT,2023-05-29,20.46,True,2026-04-30T04:36:50.726872
+EMP-00160,Anna,Watts,tamara83@jones-dudley.net,Packer,WH-WES-07,NIGHT,2026-04-06,21.08,True,2026-04-30T04:36:50.726872
+EMP-00161,James,Carter,jamesharvey@johnson-anderson.com,Forklift Operator,WH-WES-07,AFTERNOON,2023-01-31,36.05,True,2026-04-30T04:36:50.726872
+EMP-00162,Adam,Bell,dcrawford@martinez.net,Warehouse Associate,WH-EAS-02,NIGHT,2021-10-18,37.04,True,2026-04-30T04:36:50.726872
+EMP-00163,Christine,Clarke,gentrykatherine@smith.com,Picker,WH-EAS-02,AFTERNOON,2021-09-13,16.77,True,2026-04-30T04:36:50.726872
+EMP-00164,Brianna,Smith,torrestravis@garrett.org,Packer,WH-EAS-03,NIGHT,2024-12-29,31.81,True,2026-04-30T04:36:50.726872
+EMP-00165,Sharon,Hunt,hflores@warren.org,Inventory Analyst,WH-CEN-08,AFTERNOON,2025-05-17,36.97,True,2026-04-30T04:36:50.726872
+EMP-00166,Steven,Hooper,vcharles@clark.com,Receiving Clerk,WH-EAS-01,AFTERNOON,2021-05-31,35.29,True,2026-04-30T04:36:50.726872
+EMP-00167,Cindy,Johnson,lbauer@white-winters.com,Shipping Clerk,WH-SOU-09,AFTERNOON,2023-10-04,18.43,False,2026-04-30T04:36:50.726872
+EMP-00168,Nathaniel,Diaz,thomas86@walters.com,Shipping Clerk,WH-EAS-03,NIGHT,2020-06-01,31.67,True,2026-04-30T04:36:50.726872
+EMP-00169,Gina,Estrada,muellerphillip@ewing-mendoza.net,Receiving Clerk,WH-EAS-06,NIGHT,2025-08-24,24.04,True,2026-04-30T04:36:50.726872
+EMP-00170,Kathryn,Massey,williamsrichard@francis.com,QA Inspector,WH-NOR-04,NIGHT,2023-10-18,21.09,True,2026-04-30T04:36:50.726872
+EMP-00171,Natalie,Brock,kellerjames@alexander.com,QA Inspector,WH-CEN-08,NIGHT,2026-03-21,24.22,True,2026-04-30T04:36:50.726872
+EMP-00172,Franklin,Carter,nicholas79@dixon.com,Warehouse Associate,WH-CEN-10,NIGHT,2022-04-14,19.18,True,2026-04-30T04:36:50.726872
+EMP-00173,Katherine,Kemp,cdelacruz@ellis-bradford.com,Forklift Operator,WH-WES-07,AFTERNOON,2022-07-24,24.63,True,2026-04-30T04:36:50.726872
+EMP-00174,Phillip,Smith,josephkey@smith-lee.net,Warehouse Associate,WH-EAS-02,MORNING,2024-12-22,23.85,True,2026-04-30T04:36:50.726872
+EMP-00175,Eric,Soto,ychapman@williams.com,Packer,WH-SOU-09,AFTERNOON,2024-09-11,37.14,True,2026-04-30T04:36:50.726872
+EMP-00176,Steven,Flores,robertskeith@lee.com,QA Inspector,WH-CEN-10,AFTERNOON,2024-10-20,18.07,True,2026-04-30T04:36:50.726872
+EMP-00177,Sean,Cook,lauriemyers@hobbs.com,Picker,WH-CEN-08,NIGHT,2021-09-02,28.9,True,2026-04-30T04:36:50.726872
+EMP-00178,Diana,English,natashaburke@carter.com,Dock Supervisor,WH-EAS-02,MORNING,2021-01-17,22.96,True,2026-04-30T04:36:50.726872
+EMP-00179,Kylie,Hill,mark79@carlson.com,Shipping Clerk,WH-WES-07,NIGHT,2023-09-27,30.47,False,2026-04-30T04:36:50.726872
+EMP-00180,Paul,Christian,panderson@james.biz,QA Inspector,WH-NOR-04,MORNING,2023-04-16,32.8,True,2026-04-30T04:36:50.726872
+EMP-00181,Sean,Rose,scottjones@wood.com,Shipping Clerk,WH-EAS-03,NIGHT,2022-05-02,33.0,True,2026-04-30T04:36:50.726872
+EMP-00182,Raymond,Gibson,mbarajas@ballard-douglas.com,Warehouse Associate,WH-NOR-04,NIGHT,2021-06-02,33.99,True,2026-04-30T04:36:50.726872
+EMP-00183,Jennifer,Anderson,dmendoza@lawrence.com,QA Inspector,WH-EAS-06,NIGHT,2023-02-13,20.47,True,2026-04-30T04:36:50.726872
+EMP-00184,Kimberly,Aguilar,lambanthony@torres.com,Warehouse Associate,WH-NOR-05,NIGHT,2024-11-25,31.01,False,2026-04-30T04:36:50.726872
+EMP-00185,Janet,Ware,rachel38@rice.biz,Warehouse Associate,WH-CEN-08,MORNING,2025-03-09,17.71,True,2026-04-30T04:36:50.726872
+EMP-00186,Joshua,Martinez,rhughes@meyer.org,Packer,WH-EAS-03,AFTERNOON,2023-08-26,21.71,True,2026-04-30T04:36:50.726872
+EMP-00187,Carrie,Smith,oholmes@durham.net,Packer,WH-EAS-03,MORNING,2026-03-21,32.65,True,2026-04-30T04:36:50.726872
+EMP-00188,John,Silva,chelsea44@owens-lopez.com,QA Inspector,WH-EAS-01,NIGHT,2024-03-05,37.33,True,2026-04-30T04:36:50.726872
+EMP-00189,Devin,Evans,jessica78@brown-guzman.com,Dock Supervisor,WH-CEN-08,NIGHT,2024-03-28,37.39,True,2026-04-30T04:36:50.726872
+EMP-00190,Margaret,Martin,dramirez@stewart-davis.org,Dock Supervisor,WH-WES-07,AFTERNOON,2022-06-01,32.15,True,2026-04-30T04:36:50.726872
+EMP-00191,Cheryl,Huynh,pyates@payne-jarvis.com,Dock Supervisor,WH-EAS-06,NIGHT,2022-04-08,34.64,True,2026-04-30T04:36:50.726872
+EMP-00192,Lee,Mills,loweandrew@lucas.com,Receiving Clerk,WH-CEN-10,NIGHT,2024-04-27,37.95,True,2026-04-30T04:36:50.726872
+EMP-00193,Michael,Rodriguez,maryburke@galloway.info,Dock Supervisor,WH-NOR-05,AFTERNOON,2025-07-13,32.8,True,2026-04-30T04:36:50.726872
+EMP-00194,Sarah,Cooke,tholt@patrick.info,Forklift Operator,WH-EAS-02,NIGHT,2024-06-05,16.53,True,2026-04-30T04:36:50.726872
+EMP-00195,Carlos,Powell,crussell@hubbard.com,Warehouse Associate,WH-EAS-01,NIGHT,2022-04-02,29.27,False,2026-04-30T04:36:50.726872
+EMP-00196,Kathy,Long,allensheena@garner.com,Warehouse Associate,WH-EAS-01,MORNING,2022-11-26,26.98,True,2026-04-30T04:36:50.726872
+EMP-00197,Gail,Mendez,nturner@powell-diaz.com,QA Inspector,WH-SOU-09,NIGHT,2025-02-23,25.46,True,2026-04-30T04:36:50.726872
+EMP-00198,Tom,Johnson,jeffrey44@montoya.com,Dock Supervisor,WH-CEN-10,MORNING,2022-10-08,20.03,True,2026-04-30T04:36:50.726872
+EMP-00199,Dakota,Rodriguez,djames@pearson.net,Picker,WH-CEN-10,NIGHT,2025-07-25,21.54,True,2026-04-30T04:36:50.726872
+EMP-00200,John,Scott,amandastark@lawrence.biz,Forklift Operator,WH-WES-07,AFTERNOON,2023-01-22,32.03,True,2026-04-30T04:36:50.726872
