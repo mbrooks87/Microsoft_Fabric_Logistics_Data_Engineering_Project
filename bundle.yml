@@ -1,184 +1,141 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║         WMS SQL-FIRST MEDALLION — DATABRICKS ASSET BUNDLES CONFIG          ║
+# ║         WMS SQL-FIRST MEDALLION — FABRIC DEPLOYMENT CONFIG                 ║
 # ║                            bundle.yml                                       ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 #
-# This file defines the entire WMS pipeline as infrastructure-as-code.
-# Deploy with:
-#   databricks bundle deploy --target dev
-#   databricks bundle deploy --target prod
+# This file defines the notebooks, pipeline order, and environment targets
+# for the WMS medallion project on Microsoft Fabric.
 #
-# Validate with:
-#   databricks bundle validate
+# Deployment is handled by the fabric-cicd Python library via GitHub Actions.
+# See .github/workflows/deploy.yml for the full CI/CD workflow.
 #
-# Run manually with:
-#   databricks bundle run wms_pipeline --target dev
+# MANUAL DEPLOYMENT (without GitHub Actions):
+#   pip install fabric-cicd
+#   python -c "
+#     from fabric_cicd import FabricWorkspace, publish_all_items
+#     ws = FabricWorkspace(
+#         workspace_id='<YOUR_WORKSPACE_ID>',
+#         repository_directory='.',
+#         item_type_in_scope=['Notebook']
+#     )
+#     publish_all_items(ws)
+#   "
+#
+# WORKSPACE IDs:
+#   Find your workspace ID in the Fabric URL:
+#   https://app.fabric.microsoft.com/groups/<WORKSPACE_ID>/...
 
-bundle:
+project:
   name: wms_sql_medallion
+  platform: microsoft_fabric
+  description: >
+    WMS SQL-First Medallion Architecture — Bronze, Silver, Gold, and IoT Streaming
+    pipeline built on Microsoft Fabric with Delta Lake and Power BI DirectLake.
 
-# ── Variables ─────────────────────────────────────────────────────────────────
-variables:
-  cluster_node_type:
-    default: "Standard_DS3_v2"
-    description: "Node type for job clusters"
-  min_workers:
-    default: 1
-    description: "Minimum number of workers"
-  max_workers:
-    default: 2
-    description: "Maximum number of workers"
+# ── Environments ──────────────────────────────────────────────────────────────
+environments:
 
-# ── Targets (environments) ────────────────────────────────────────────────────
-targets:
-
-  # Development — runs on every push to a feature branch
   dev:
-    mode: development
-    default: true
-    workspace:
-      host: ${var.DATABRICKS_HOST}
-    variables:
-      min_workers: 1
-      max_workers: 2
+    workspace_id: "${FABRIC_WORKSPACE_ID_DEV}"
+    description: "Development workspace — deploys on every push to main"
+    lakehouse_name: "wms_lakehouse_dev"
+    raw_files_path: "Files/raw/"
+    checkpoint_path: "Files/checkpoints/iot_stream"
 
-  # Production — runs on merge to main branch only
   prod:
-    mode: production
-    workspace:
-      host: ${var.DATABRICKS_HOST}
-    variables:
-      min_workers: 2
-      max_workers: 4
-    run_as:
-      service_principal_name: ${var.SERVICE_PRINCIPAL}
+    workspace_id: "${FABRIC_WORKSPACE_ID_PROD}"
+    description: "Production workspace — manual deploy with approval gate"
+    lakehouse_name: "wms_lakehouse_prod"
+    raw_files_path: "Files/raw/"
+    checkpoint_path: "Files/checkpoints/iot_stream"
 
-# ── Resources ─────────────────────────────────────────────────────────────────
-resources:
+# ── Notebooks ─────────────────────────────────────────────────────────────────
+# Listed in execution order. fabric-cicd deploys all notebooks to the
+# target Fabric workspace. Orchestration (run order) is handled by
+# Fabric Data Factory — see pipeline section below.
+notebooks:
 
-  # ── Job Cluster definition (shared across all tasks) ──────────────────────
-  clusters:
-    wms_job_cluster: &wms_cluster
-      spark_version: "14.3.x-scala2.12"
-      node_type_id: ${var.cluster_node_type}
-      autoscale:
-        min_workers: ${var.min_workers}
-        max_workers: ${var.max_workers}
-      spark_conf:
-        spark.databricks.delta.preview.enabled: "true"
-        spark.sql.extensions: "io.delta.sql.DeltaSparkSessionExtension"
-      azure_attributes:
-        availability: "ON_DEMAND_AZURE"
+  - name: nb_bronze_ingest_sql
+    path: notebooks/bronze/nb_bronze_ingest_sql.py
+    description: >
+      Part 1 — Ingests all 19 raw CSVs into Bronze Delta tables via
+      read_files() CTAS. PySpark: 3 lines (schema bootstrap only).
 
-  # ── Main pipeline job ──────────────────────────────────────────────────────
-  jobs:
-    wms_pipeline:
-      name: "[${bundle.target}] WMS SQL Medallion Pipeline"
-      description: "Full Bronze → Silver → Gold batch pipeline for WMS dataset"
+  - name: nb_silver_transform_sql
+    path: notebooks/silver/nb_silver_transform_sql.py
+    description: >
+      Part 2 — Deduplicates and type-casts Bronze into 15 Silver Delta
+      tables using ROW_NUMBER() CTEs. PySpark: 0 lines.
+    depends_on:
+      - nb_bronze_ingest_sql
 
-      # Email alerts on failure
-      email_notifications:
-        on_failure:
-          - ${var.ALERT_EMAIL}
+  - name: nb_gold_build_sql
+    path: notebooks/gold/nb_gold_build_sql.py
+    description: >
+      Part 3 — Builds star schema (4 dims, 5 facts, 3 KPI marts) in Gold.
+      Runs OPTIMIZE + ZORDER + VACUUM in pure SQL. PySpark: 0 lines.
+    depends_on:
+      - nb_silver_transform_sql
 
-      # Timeout for the entire job (90 minutes)
-      timeout_seconds: 5400
+  - name: nb_dq_validation
+    path: notebooks/tests/nb_dq_validation.py
+    description: >
+      Data quality validation — row counts, business rules, freshness checks
+      across all 12 Gold tables. Raises exception on failure to fail the pipeline.
+    depends_on:
+      - nb_gold_build_sql
 
-      # Retry once on failure
-      max_concurrent_runs: 1
+  - name: nb_iot_stream_sql
+    path: notebooks/streaming/nb_iot_stream_sql.py
+    description: >
+      Part 4 — Always-on streaming notebook. Reads bronze.raw_iot_events via
+      Delta readStream, aggregates into 1-hour tumbling windows, writes to
+      gold.gold_kpi_iot_stream. Run as a separate Fabric Notebook Job.
+      NOT part of the daily batch pipeline.
+    always_on: true
 
-      # Shared job cluster
-      job_clusters:
-        - job_cluster_key: wms_cluster
-          new_cluster:
-            <<: *wms_cluster
+# ── Data Factory Pipeline ─────────────────────────────────────────────────────
+# Wire these notebooks in Fabric Data Factory (pl_wms_medallion):
+#
+#   DAILY BATCH (06:00 UTC):
+#   [nb_bronze_ingest_sql]
+#         │ on success
+#         ▼
+#   [nb_silver_transform_sql]
+#         │ on success
+#         ▼
+#   [nb_gold_build_sql]
+#         │ on success
+#         ▼
+#   [nb_dq_validation]
+#         │ on success
+#         ▼
+#   [Wait 5 min → Power BI semantic model refresh]
+#
+#   STREAMING (always-on separate job):
+#   [nb_iot_stream_sql] → Run as Fabric Notebook Job with "Restart on failure"
 
-      tasks:
+pipeline:
+  name: pl_wms_medallion
+  schedule: "0 6 * * *"      # Daily at 06:00 UTC (cron format)
+  timezone: UTC
+  tasks:
+    - notebook: nb_bronze_ingest_sql
+      timeout_minutes: 45
+    - notebook: nb_silver_transform_sql
+      timeout_minutes: 60
+      depends_on: nb_bronze_ingest_sql
+    - notebook: nb_gold_build_sql
+      timeout_minutes: 60
+      depends_on: nb_silver_transform_sql
+    - notebook: nb_dq_validation
+      timeout_minutes: 15
+      depends_on: nb_gold_build_sql
 
-        # ── TASK 1: Bronze Ingestion ─────────────────────────────────────────
-        - task_key: bronze_ingest
-          description: "Ingest all 19 raw CSVs into Bronze Delta tables"
-          job_cluster_key: wms_cluster
-          notebook_task:
-            notebook_path: ./notebooks/bronze/nb_bronze_ingest_sql
-            base_parameters:
-              raw_path: "dbfs:/FileStore/wms/raw/"
-              bronze_schema: "bronze"
-          timeout_seconds: 2700   # 45 minutes
-
-        # ── TASK 2: Silver Transform ─────────────────────────────────────────
-        - task_key: silver_transform
-          description: "Deduplicate, type cast, and enrich Bronze into Silver"
-          depends_on:
-            - task_key: bronze_ingest
-          job_cluster_key: wms_cluster
-          notebook_task:
-            notebook_path: ./notebooks/silver/nb_silver_transform_sql
-            base_parameters:
-              bronze_schema: "bronze"
-              silver_schema: "silver"
-          timeout_seconds: 3600   # 60 minutes
-
-        # ── TASK 3: Gold Build ───────────────────────────────────────────────
-        - task_key: gold_build
-          description: "Build star schema facts, dims, and KPI marts in Gold"
-          depends_on:
-            - task_key: silver_transform
-          job_cluster_key: wms_cluster
-          notebook_task:
-            notebook_path: ./notebooks/gold/nb_gold_build_sql
-            base_parameters:
-              silver_schema: "silver"
-              gold_schema: "gold"
-          timeout_seconds: 3600   # 60 minutes
-
-        # ── TASK 4: Data Quality Validation ─────────────────────────────────
-        - task_key: dq_validation
-          description: "Run data quality checks across all Gold tables"
-          depends_on:
-            - task_key: gold_build
-          job_cluster_key: wms_cluster
-          notebook_task:
-            notebook_path: ./notebooks/tests/nb_dq_validation
-            base_parameters:
-              gold_schema: "gold"
-              fail_on_error: "true"
-          timeout_seconds: 900    # 15 minutes
-
-      # Daily schedule trigger (06:00 UTC)
-      schedule:
-        quartz_cron_expression: "0 0 6 * * ?"
-        timezone_id: "UTC"
-        pause_status: UNPAUSED
-
-    # ── Streaming job (always-on, separate from batch pipeline) ─────────────
-    wms_iot_stream:
-      name: "[${bundle.target}] WMS IoT Streaming"
-      description: "Continuous Delta readStream → 1-hour window → gold_kpi_iot_stream"
-
-      email_notifications:
-        on_failure:
-          - ${var.ALERT_EMAIL}
-
-      # Auto-restart on failure — streaming should always be running
-      max_concurrent_runs: 1
-
-      job_clusters:
-        - job_cluster_key: stream_cluster
-          new_cluster:
-            spark_version: "14.3.x-scala2.12"
-            node_type_id: ${var.cluster_node_type}
-            num_workers: 1
-            spark_conf:
-              spark.databricks.delta.preview.enabled: "true"
-
-      tasks:
-        - task_key: iot_stream
-          description: "IoT Delta stream with SQL tumbling window aggregation"
-          job_cluster_key: stream_cluster
-          notebook_task:
-            notebook_path: ./notebooks/streaming/nb_iot_stream_sql
-            base_parameters:
-              checkpoint_path: "dbfs:/FileStore/wms/checkpoints/iot_stream"
-              target_table: "gold.gold_kpi_iot_stream"
-              trigger_interval: "5 minutes"
+streaming_job:
+  name: wms_iot_stream
+  notebook: nb_iot_stream_sql
+  restart_on_failure: true
+  description: >
+    Runs continuously alongside the daily batch pipeline.
+    Checkpoint at Files/checkpoints/iot_stream handles resume on restart.

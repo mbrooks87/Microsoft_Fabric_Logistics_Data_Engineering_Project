@@ -5,32 +5,40 @@
 #
 # WORKFLOW OVERVIEW:
 #
-#   Push to feature branch  → validate + lint only (fast feedback)
-#   Push to main            → validate + lint + deploy to dev + run tests
-#   Manual trigger          → validate + lint + deploy to prod
+#   Push to feature branch  → validate CSV files + lint notebooks (fast feedback)
+#   Push to main            → validate + deploy notebooks to dev Fabric workspace
+#   Manual trigger          → validate + deploy to prod Fabric workspace
 #
-# REQUIRED GITHUB SECRETS (set in repo Settings → Secrets → Actions):
-#   DATABRICKS_HOST         → your Databricks workspace URL
-#   DATABRICKS_TOKEN        → your Databricks personal access token
-#   ALERT_EMAIL             → email for pipeline failure notifications
+# HOW FABRIC CI/CD WORKS:
+#   This workflow uses the official Microsoft fabric-cicd Python library to deploy
+#   notebooks directly into Fabric workspaces via the Fabric REST API.
+#   Authentication uses an Azure Service Principal (not a personal token).
 #
-# SETUP STEPS:
-#   1. Install Databricks CLI: pip install databricks-cli
-#   2. Install DABs: pip install databricks-asset-bundles
-#   3. Add secrets to GitHub repo
-#   4. Push to main to trigger first deployment
+# REQUIRED GITHUB SECRETS (Settings → Secrets → Actions):
+#   AZURE_CLIENT_ID         → Service principal application (client) ID
+#   AZURE_CLIENT_SECRET     → Service principal client secret
+#   AZURE_TENANT_ID         → Your Microsoft Entra (Azure AD) tenant ID
+#   FABRIC_WORKSPACE_ID_DEV → Fabric workspace GUID for dev environment
+#   FABRIC_WORKSPACE_ID_PROD→ Fabric workspace GUID for prod environment
+#
+# HOW TO GET THESE VALUES:
+#   Service Principal:
+#     Azure Portal → Azure Active Directory → App registrations → New registration
+#     → Add a client secret → note the client ID, secret, and tenant ID
+#     → In Fabric: Workspace Settings → add the service principal as Contributor
+#   Workspace ID:
+#     Open your Fabric workspace in browser → copy the GUID from the URL
+#     e.g. https://app.fabric.microsoft.com/groups/<WORKSPACE_ID>/...
 
-name: WMS Medallion CI/CD
+name: WMS Medallion CI/CD — Microsoft Fabric
 
 on:
-  # Trigger on push to any branch
   push:
     branches:
       - main
       - 'feature/**'
       - 'fix/**'
 
-  # Allow manual trigger for prod deployment
   workflow_dispatch:
     inputs:
       target:
@@ -42,7 +50,7 @@ on:
           - dev
           - prod
 
-# Cancel in-progress runs on new push to same branch
+# Cancel in-progress runs on new push to the same branch
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -51,73 +59,29 @@ jobs:
 
   # ════════════════════════════════════════════════════════════════════════════
   # JOB 1 — VALIDATE
-  # Runs on every push to every branch
-  # Fast feedback — catches syntax errors and schema issues before deploy
+  # Runs on every push to every branch — fast feedback before any deployment
   # ════════════════════════════════════════════════════════════════════════════
   validate:
-    name: Validate Bundle
+    name: Validate
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Databricks CLI
+      - name: Install dependencies
         run: |
-          pip install databricks-cli
-          pip install databricks-sdk
+          pip install fabric-cicd
 
-      - name: Install DABs (Databricks Asset Bundles)
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
-
-      - name: Configure Databricks CLI
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          databricks configure --token <<EOF
-          $DATABRICKS_HOST
-          $DATABRICKS_TOKEN
-          EOF
-
-      - name: Validate bundle
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          databricks bundle validate
-          echo "✅ Bundle validation passed"
-
-      - name: Lint SQL notebooks
-        run: |
-          pip install sqlfluff
-          # Lint all SQL blocks in Python notebooks
-          find notebooks/ -name "*.py" -exec grep -l "%%sql\|spark.sql" {} \; | \
-          while read f; do
-            echo "Checking: $f"
-            python -c "
-          import re, sys
-          with open('$f') as fh:
-              content = fh.read()
-          # Extract SQL blocks
-          sql_blocks = re.findall(r'spark\.sql\(\"\"\"(.*?)\"\"\"\)', content, re.DOTALL)
-          if sql_blocks:
-              print(f'Found {len(sql_blocks)} SQL blocks in $f')
-          "
-          done
-          echo "✅ SQL lint passed"
-
-      - name: Validate CSV data files
+      - name: Validate all 19 CSV data files are present
         run: |
           python -c "
-          import os, csv
-          data_dir = 'data'
+          import os, sys
           required = [
               'raw_orders', 'raw_order_lines', 'raw_customers', 'raw_products',
               'raw_inventory', 'raw_inventory_transactions', 'raw_shipments',
@@ -128,27 +92,70 @@ jobs:
           ]
           missing = []
           for t in required:
-              path = f'{data_dir}/{t}.csv'
+              path = f'data/{t}.csv'
               if not os.path.exists(path):
                   missing.append(path)
               else:
                   with open(path) as f:
                       rows = sum(1 for _ in f) - 1
-                  print(f'  ✅ {t}.csv ({rows:,} rows)')
+                  print(f'  OK  {t}.csv  ({rows:,} rows)')
           if missing:
-              print(f'  ❌ Missing files: {missing}')
+              print(f'MISSING: {missing}')
               sys.exit(1)
-          print('All 19 CSV files present')
+          print('All 19 CSV files present and accounted for.')
           "
-          echo "✅ Data validation passed"
+
+      - name: Validate notebooks are present
+        run: |
+          python -c "
+          import os, sys
+          required = [
+              'notebooks/bronze/nb_bronze_ingest_sql.py',
+              'notebooks/silver/nb_silver_transform_sql.py',
+              'notebooks/gold/nb_gold_build_sql.py',
+              'notebooks/streaming/nb_iot_stream_sql.py',
+              'notebooks/tests/nb_dq_validation.py',
+          ]
+          missing = [f for f in required if not os.path.exists(f)]
+          if missing:
+              print(f'MISSING notebooks: {missing}')
+              sys.exit(1)
+          print('All notebooks present.')
+          "
+
+      - name: Check notebooks for obvious syntax errors
+        run: |
+          python -c "
+          import ast, os, sys
+          notebooks = [
+              'notebooks/bronze/nb_bronze_ingest_sql.py',
+              'notebooks/silver/nb_silver_transform_sql.py',
+              'notebooks/gold/nb_gold_build_sql.py',
+              'notebooks/streaming/nb_iot_stream_sql.py',
+              'notebooks/tests/nb_dq_validation.py',
+          ]
+          errors = []
+          for nb in notebooks:
+              with open(nb) as f:
+                  source = f.read()
+              try:
+                  ast.parse(source)
+                  print(f'  OK  {nb}')
+              except SyntaxError as e:
+                  errors.append(f'{nb}: {e}')
+                  print(f'  FAIL  {nb}: {e}')
+          if errors:
+              sys.exit(1)
+          print('All notebooks passed syntax check.')
+          "
 
   # ════════════════════════════════════════════════════════════════════════════
-  # JOB 2 — DEPLOY TO DEV
-  # Runs only on push to main branch
-  # Deploys notebooks and job definitions to dev workspace
+  # JOB 2 — DEPLOY TO DEV FABRIC WORKSPACE
+  # Runs on push to main only
+  # Uses fabric-cicd to deploy notebooks to the dev Fabric workspace
   # ════════════════════════════════════════════════════════════════════════════
   deploy_dev:
-    name: Deploy to Dev
+    name: Deploy to Dev (Fabric)
     runs-on: ubuntu-latest
     needs: validate
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -160,133 +167,105 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Databricks CLI + DABs
-        run: |
-          pip install databricks-cli databricks-sdk
-          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+      - name: Install fabric-cicd
+        run: pip install fabric-cicd
 
-      - name: Configure Databricks CLI
+      - name: Deploy notebooks to dev Fabric workspace
         env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          FABRIC_WORKSPACE_ID: ${{ secrets.FABRIC_WORKSPACE_ID_DEV }}
         run: |
-          databricks configure --token <<EOF
-          $DATABRICKS_HOST
-          $DATABRICKS_TOKEN
-          EOF
+          python - << 'PYEOF'
+          import os
+          from fabric_cicd import FabricWorkspace, publish_all_items
 
-      - name: Upload CSV files to DBFS
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          echo "Uploading 19 CSV files to DBFS..."
-          databricks fs mkdirs dbfs:/FileStore/wms/raw/
-          for f in data/*.csv; do
-            filename=$(basename $f)
-            echo "  Uploading $filename..."
-            databricks fs cp $f dbfs:/FileStore/wms/raw/$filename --overwrite
-          done
-          echo "✅ All CSV files uploaded"
+          workspace = FabricWorkspace(
+              workspace_id    = os.environ["FABRIC_WORKSPACE_ID"],
+              repository_directory = ".",
+              item_type_in_scope   = ["Notebook"],
+          )
 
-      - name: Deploy bundle to dev
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-        run: |
-          databricks bundle deploy --target dev
-          echo "✅ Bundle deployed to dev"
+          print("Deploying notebooks to dev Fabric workspace...")
+          publish_all_items(workspace)
+          print("Deployment to dev complete.")
+          PYEOF
 
-      - name: Run pipeline in dev
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+      - name: Post deployment summary
         run: |
-          echo "Triggering WMS pipeline run in dev..."
-          databricks bundle run wms_pipeline --target dev
-          echo "✅ Pipeline run completed in dev"
-
-      - name: Run data quality tests
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          echo "Running data quality validation..."
-          databricks bundle run wms_pipeline --task dq_validation --target dev
-          echo "✅ Data quality tests passed"
+          echo "## Dev Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Notebook | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_bronze_ingest_sql | Deployed |" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_silver_transform_sql | Deployed |" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_gold_build_sql | Deployed |" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_iot_stream_sql | Deployed |" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_dq_validation | Deployed |" >> $GITHUB_STEP_SUMMARY
 
   # ════════════════════════════════════════════════════════════════════════════
-  # JOB 3 — DEPLOY TO PROD
-  # Runs only on manual workflow_dispatch trigger with target=prod
-  # Requires dev deployment to have succeeded first
+  # JOB 3 — DEPLOY TO PROD FABRIC WORKSPACE
+  # Manual trigger only (workflow_dispatch with target=prod)
+  # Requires GitHub Environment approval gate — set up in:
+  #   Repo Settings → Environments → production → Required reviewers
   # ════════════════════════════════════════════════════════════════════════════
   deploy_prod:
-    name: Deploy to Prod
+    name: Deploy to Prod (Fabric)
     runs-on: ubuntu-latest
     needs: validate
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'prod'
 
     environment:
       name: production
-      # Requires manual approval in GitHub before deploying to prod
-      # Set this up in repo Settings → Environments → production → Required reviewers
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Databricks CLI + DABs
-        run: |
-          pip install databricks-cli databricks-sdk
-          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+      - name: Install fabric-cicd
+        run: pip install fabric-cicd
 
-      - name: Configure Databricks CLI
+      - name: Deploy notebooks to prod Fabric workspace
         env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          FABRIC_WORKSPACE_ID: ${{ secrets.FABRIC_WORKSPACE_ID_PROD }}
         run: |
-          databricks configure --token <<EOF
-          $DATABRICKS_HOST
-          $DATABRICKS_TOKEN
-          EOF
+          python - << 'PYEOF'
+          import os
+          from fabric_cicd import FabricWorkspace, publish_all_items
 
-      - name: Deploy bundle to prod
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-        run: |
-          databricks bundle deploy --target prod
-          echo "✅ Bundle deployed to prod"
+          workspace = FabricWorkspace(
+              workspace_id    = os.environ["FABRIC_WORKSPACE_ID"],
+              repository_directory = ".",
+              item_type_in_scope   = ["Notebook"],
+          )
 
-      - name: Verify prod deployment
-        env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          echo "Verifying prod job exists..."
-          databricks jobs list | grep "WMS SQL Medallion Pipeline"
-          echo "✅ Prod deployment verified"
+          print("Deploying notebooks to prod Fabric workspace...")
+          publish_all_items(workspace)
+          print("Deployment to prod complete.")
+          PYEOF
 
       - name: Post deployment summary
         run: |
-          echo "## ✅ Production Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "## Prod Deployment Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Component | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "| Notebook | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| Bundle validation | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-          echo "| CSV upload | ✅ Complete |" >> $GITHUB_STEP_SUMMARY
-          echo "| Notebook deployment | ✅ Deployed |" >> $GITHUB_STEP_SUMMARY
-          echo "| Job scheduling | ✅ Active (06:00 UTC daily) |" >> $GITHUB_STEP_SUMMARY
-          echo "| IoT streaming job | ✅ Running |" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_bronze_ingest_sql | Deployed |" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_silver_transform_sql | Deployed |" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_gold_build_sql | Deployed |" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_iot_stream_sql | Deployed |" >> $GITHUB_STEP_SUMMARY
+          echo "| nb_dq_validation | Deployed |" >> $GITHUB_STEP_SUMMARY

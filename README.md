@@ -178,8 +178,17 @@ nb_iot_stream_sql       → run Cells 1–4 only to start the stream
 - `CREATE OR REPLACE TABLE` is a full overwrite on each pipeline run. For incremental production loads replace with `INSERT INTO ... WHERE <date_col> > (SELECT MAX(...))`.
 - Streaming notebook Cells 5–10 are **manual** spot-check cells — do not run them sequentially with the rest of the notebook.
 
-### Note on CI/CD (`bundle.yml` / `deploy.yml`)
-The CI/CD files in this repo are written for **Databricks Asset Bundles** and serve as a reference architecture for automated deployment. For native Microsoft Fabric CI/CD, use [Fabric Git integration](https://learn.microsoft.com/en-us/fabric/cicd/git-integration/intro-to-git-integration) to connect this repo directly to your Fabric workspace.
+### CI/CD (`bundle.yml` / `deploy.yml`)
+The CI/CD in this repo is built natively for **Microsoft Fabric** using:
+- **[fabric-cicd](https://github.com/microsoft/fabric-cicd)** — Microsoft's official Python library for deploying Fabric items via REST API
+- **GitHub Actions** — triggers on push to `main` (dev deploy) or manual dispatch (prod deploy)
+- **Azure Service Principal** — authenticates securely without personal tokens
+- **GitHub Environments** — prod deployment requires manual approval gate
+
+To activate CI/CD, add these secrets to your GitHub repo (Settings → Secrets → Actions):
+- `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `AZURE_TENANT_ID` — from your Azure service principal
+- `FABRIC_WORKSPACE_ID_DEV` — GUID from your dev Fabric workspace URL
+- `FABRIC_WORKSPACE_ID_PROD` — GUID from your prod Fabric workspace URL
 
 ---
 
